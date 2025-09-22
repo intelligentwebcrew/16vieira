@@ -2317,13 +2317,8 @@ img {
             });
         });
 
-        // Brevo Configuration
-const BREVO_CONFIG = {
-    apiKey: 'REDACTED', // Replace with your actual Brevo API key
-    apiUrl: 'https://api.brevo.com/v3/smtp/email'
-};
 
-// Enhanced contact form submission with Brevo
+// Updated form submission (NO API key in frontend)
 document.getElementById('contactForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
@@ -2348,79 +2343,13 @@ document.getElementById('contactForm').addEventListener('submit', async function
     const data = Object.fromEntries(formData);
     
     try {
-        // Send via Brevo API
-        const response = await fetch(BREVO_CONFIG.apiUrl, {
+        // Send to your secure backend endpoint
+        const response = await fetch('/send-email.php', {
             method: 'POST',
             headers: {
-                'accept': 'application/json',
-                'api-key': BREVO_CONFIG.apiKey,
-                'content-type': 'application/json'
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                sender: {
-                    name: `${data.firstName} ${data.lastName}`,
-                    email: data.email
-                },
-                to: [
-                    {
-                        email: 'gerci.usa@gmail.com',
-                        name: 'Gercilaine DeSouza'
-                    },
-                    {
-                        email: 'luizlz@gmail.com',
-                        name: 'Backup Contact'
-                    }
-                ],
-                subject: `🏠 URGENT: Property Inquiry - 16 Vieira Dr - ${data.firstName} ${data.lastName}`,
-                htmlContent: `
-                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                        <div style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 30px; text-align: center; color: white;">
-                            <h1 style="margin: 0; font-size: 24px;">🏠 New Property Inquiry</h1>
-                            <p style="margin: 10px 0 0 0; opacity: 0.9;">16 Vieira Dr, Peabody, MA</p>
-                        </div>
-                        
-                        <div style="padding: 30px; background: white;">
-                            <h2 style="color: #2d3748; margin-bottom: 20px;">Contact Information</h2>
-                            
-                            <div style="background: #f7fafc; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-                                <p><strong>Name:</strong> ${data.firstName} ${data.lastName}</p>
-                                <p><strong>Email:</strong> <a href="mailto:${data.email}">${data.email}</a></p>
-                                <p><strong>Phone:</strong> <a href="tel:${data.phone}">${data.phone}</a></p>
-                                <p><strong>Financing Status:</strong> ${data.financing || 'Not specified'}</p>
-                            </div>
-                            
-                            ${data.message ? `
-                            <h3 style="color: #2d3748; margin-bottom: 10px;">Client Message:</h3>
-                            <div style="background: #edf2f7; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
-                                <p style="margin: 0;">${data.message}</p>
-                            </div>
-                            ` : ''}
-                            
-                            <div style="margin-top: 30px; padding: 20px; background: #f0fff4; border-radius: 10px; border: 2px solid #48bb78;">
-                                <h3 style="color: #22543d; margin-bottom: 10px;">Property Details</h3>
-                                <p style="margin: 5px 0;"><strong>Address:</strong> 16 Vieira Dr, Peabody, MA 01960</p>
-                                <p style="margin: 5px 0;"><strong>Price:</strong> $949,900</p>
-                                <p style="margin: 5px 0;"><strong>MLS:</strong> 73427376</p>
-                                <p style="margin: 5px 0;"><strong>Features:</strong> 3 bedrooms, 3 bathrooms, 2,330 sq ft</p>
-                            </div>
-                            
-                            <div style="margin-top: 30px; text-align: center;">
-                                <a href="tel:${data.phone}" style="background: #48bb78; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block; margin-right: 10px;">📞 Call Now</a>
-                                <a href="mailto:${data.email}" style="background: #667eea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">📧 Reply Email</a>
-                            </div>
-                        </div>
-                        
-                        <div style="background: #2d3748; color: white; padding: 20px; text-align: center;">
-                            <p style="margin: 0; font-size: 14px;">Sent through 16vieira.com on ${new Date().toLocaleString()}</p>
-                            <p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.8;">⚡ Respond within 24 hours for maximum conversion</p>
-                        </div>
-                    </div>
-                `,
-                replyTo: {
-                    email: data.email,
-                    name: `${data.firstName} ${data.lastName}`
-                }
-            })
+            body: JSON.stringify(data)
         });
 
         if (response.ok) {
@@ -2456,7 +2385,7 @@ document.getElementById('contactForm').addEventListener('submit', async function
         }
         
     } catch (error) {
-        console.error('Brevo email error:', error);
+        console.error('Email sending error:', error);
         
         // Show error state
         if (btnLoading) {
@@ -2473,10 +2402,10 @@ document.getElementById('contactForm').addEventListener('submit', async function
         
         // Track error
         if (typeof trackEvent !== 'undefined') {
-            trackEvent('Lead', 'Form Submission Error', 'Brevo API Failed');
-                }
-            }
-        });
+                  trackEvent('Lead', 'Form Submission Error', 'Backend Failed');
+              }
+          }
+      });
 
         // Enhanced scroll animations
         const observerOptions = {
@@ -2703,13 +2632,13 @@ document.getElementById('contactForm').addEventListener('submit', async function
             }
         });
         // Performance monitoring
-window.addEventListener('load', function() {
-  const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
-  console.log('Page load time:', loadTime + 'ms');
-  if (loadTime > 3000) {
-    trackEvent('Performance', 'Slow Load', loadTime + 'ms');
-  }
-});
+        window.addEventListener('load', function() {
+          const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+          console.log('Page load time:', loadTime + 'ms');
+          if (loadTime > 3000) {
+            trackEvent('Performance', 'Slow Load', loadTime + 'ms');
+          }
+        });
 
 /* =========================
    NOVA GALERIA / LIGHTBOX

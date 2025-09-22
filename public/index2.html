@@ -57,7 +57,8 @@
             z-index: 2;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 2rem 1rem;
+            width: 100%;
             display: grid;
             grid-template-columns: 1fr;
             gap: 2rem;
@@ -83,7 +84,7 @@
         }
 
         .hero-title {
-            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-size: clamp(2rem, 8vw, 4rem);
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 1rem;
@@ -101,7 +102,7 @@
         }
 
         .hero-price {
-            font-size: clamp(2rem, 6vw, 2.5rem);
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
             font-weight: 700;
             color: #48bb78;
             margin-bottom: 1.5rem;
@@ -126,13 +127,13 @@
         }
 
         .hero-detail-number {
-            font-size: clamp(1.5rem, 5vw, 1.75rem);
+            font-size: clamp(1.25rem, 5vw, 1.75rem);
             font-weight: 700;
             color: #fff;
         }
 
         .hero-detail-label {
-            font-size: 0.875rem;
+            font-size: clamp(0.75rem, 3vw, 0.875rem);
             opacity: 0.9;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -215,6 +216,8 @@
             align-items: center;
             padding: 0.75rem 0;
             border-bottom: 1px solid #e2e8f0;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
         .quick-facts li:last-child {
@@ -251,7 +254,7 @@
         }
 
         .section-title {
-            font-size: clamp(2rem, 6vw, 2.5rem);
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
             font-weight: 700;
             color: #1a202c;
             margin-bottom: 1rem;
@@ -342,6 +345,28 @@
             object-fit: cover;
         }
 
+        .gallery-item.hidden {
+            display: none;
+        }
+        
+        .gallery-item.visible {
+            display: block;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .gallery-item.loading {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .gallery-item img[data-src] {
+            background: linear-gradient(135deg, #f7fafc, #e2e8f0);
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+        }
+
         /* Enhanced Property Details Section */
         .property-details-enhanced {
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
@@ -371,14 +396,14 @@
         }
 
         .details-title {
-            font-size: clamp(1.75rem, 5vw, 2.25rem);
+            font-size: clamp(1.5rem, 5vw, 2.25rem);
             font-weight: 700;
             color: #1a202c;
             margin-bottom: 0.5rem;
         }
 
         .details-subtitle {
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 3vw, 1.1rem);
             color: #4a5568;
         }
 
@@ -633,7 +658,7 @@
             color: white;
             text-decoration: none;
             transition: color 0.3s ease;
-            word-break: break-all;
+            word-break: break-word;
         }
 
         .contact-item a:hover {
@@ -717,6 +742,17 @@
             to { opacity: 1; }
         }
 
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @keyframes slideInUp {
             from {
                 opacity: 0;
@@ -749,42 +785,73 @@
             transform: translateY(0);
         }
 
-        /* Mobile Optimizations */
+        /* ENHANCED MOBILE OPTIMIZATIONS */
         @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+                -webkit-text-size-adjust: 100%;
+            }
+
             .hero {
                 min-height: 100vh;
-                padding: 1rem 0;
+                padding: 0;
             }
 
             .hero-content {
                 padding: 1rem;
                 gap: 1.5rem;
+                grid-template-columns: 1fr;
+                max-width: 100%;
+            }
+            
+            .hero-text {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .hero-card {
+                width: 100%;
+                max-width: 100%;
+                padding: 1.5rem;
+                margin: 0;
             }
             
             .hero-details {
-                gap: 1rem;
+                gap: 0.75rem;
                 flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-detail {
+                flex: 1;
+                min-width: 70px;
+                max-width: 100px;
             }
             
             .hero-cta {
                 flex-direction: column;
-                align-items: center;
+                align-items: stretch;
                 gap: 0.75rem;
+                width: 100%;
             }
             
             .btn {
                 width: 100%;
-                max-width: 300px;
-                padding: 1.25rem 2rem;
-                font-size: 1.1rem;
+                max-width: none;
+                padding: 1rem;
+                font-size: 1rem;
+                min-width: auto;
+                white-space: normal;
+                text-align: center;
             }
 
             .section {
-                padding: 3rem 0;
+                padding: 2rem 0;
             }
 
             .container {
                 padding: 0 1rem;
+                max-width: 100%;
             }
 
             .features-grid {
@@ -792,103 +859,13 @@
                 gap: 1rem;
             }
 
-            .gallery-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .specs-container {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .spec-card {
+            .feature-card {
                 padding: 1.5rem;
             }
 
-            .property-details-enhanced {
-                padding: 2rem 1.5rem;
-                margin-top: 2rem;
-            }
-
-            .contact-grid {
+            .gallery-grid {
                 grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .contact-form-container {
-                padding: 2rem 1.5rem;
-            }
-
-            .contact-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .contact-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.25rem;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: 2rem;
-            }
-
-            .hero-badge {
-                padding: 0.5rem 1rem;
-                font-size: 0.8rem;
-            }
-
-            .btn {
-                padding: 1rem 1.5rem;
-                font-size: 1rem;
-            }
-
-            .feature-card,
-            .spec-card {
-                padding: 1.25rem;
-            }
-
-            .property-details-enhanced {
-                padding: 1.5rem 1rem;
-            }
-
-            .close {
-                top: 10px;
-                right: 20px;
-                font-size: 30px;
-            }
-        }
-
-        /* Desktop optimizations */
-        @media (min-width: 769px) {
-            .hero-content {
-                grid-template-columns: 1fr 400px;
-                gap: 4rem;
-                text-align: left;
-            }
-
-            .hero-details {
-                justify-content: flex-start;
-            }
-
-            .hero-cta {
-                justify-content: flex-start;
-            }
-
-            .contact-grid {
-                grid-template-columns: 1fr 400px;
-                gap: 4rem;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
             }
 
             .specs-container {
@@ -933,6 +910,140 @@
             * {
                 transition: none !important;
                 animation: none !important;
+            }
+        }
+
+        /* Additional mobile-specific fixes */
+        @media (max-width: 768px) {
+            .hero-subtitle {
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-price {
+                text-align: center;
+            }
+
+            .section-header {
+                text-align: center;
+                padding: 0 0.5rem;
+            }
+
+            .section-subtitle {
+                text-align: center;
+                padding: 0 0.5rem;
+            }
+
+            /* Ensure all text content doesn't overflow */
+            h1, h2, h3, h4, h5, h6 {
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                hyphens: auto;
+            }
+
+            p, span, div {
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+
+            /* Fix any potential horizontal overflow */
+            .hero-content,
+            .container,
+            .section,
+            .contact-grid,
+            .features-grid,
+            .gallery-grid,
+            .specs-container {
+                width: 100%;
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+
+            /* Ensure buttons don't cause overflow */
+            .hero-cta {
+                width: 100%;
+                padding: 0 0.5rem;
+            }
+
+            /* Fix form elements on mobile */
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+
+            /* Responsive images */
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            /* Fix contact details overflow */
+            .contact-item strong {
+                display: block;
+                margin-bottom: 0.25rem;
+            }
+
+            .contact-item a {
+                display: block;
+                word-break: break-all;
+                overflow-wrap: break-word;
+            }
+        }
+
+        /* Ultra-small screens */
+        @media (max-width: 360px) {
+            .container {
+                padding: 0 0.75rem;
+            }
+
+            .hero-content {
+                padding: 0.5rem;
+            }
+
+            .hero-card {
+                padding: 1rem;
+            }
+
+            .feature-card,
+            .spec-card,
+            .contact-form-container,
+            .contact-card {
+                padding: 1rem;
+            }
+
+            .btn {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+
+            .hero-detail {
+                min-width: 60px;
+            }
+
+            .hero-details {
+                gap: 0.5rem;
+            }
+        }
+
+        /* Landscape mobile fixes */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .hero {
+                min-height: 100vh;
+            }
+
+            .hero-content {
+                padding: 1rem;
+            }
+        }
+
+        /* Fix for very wide mobile screens */
+        @media (max-width: 768px) and (min-width: 600px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -1051,22 +1162,22 @@
     </section>
 
     <section class="section">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Property Gallery</h2>
-            <p class="section-subtitle">Take a visual tour of this beautiful home and its stunning features</p>
-        </div>
-        
-        <!-- Gallery Controls -->
-        <div style="text-align: center; margin-bottom: 2rem;">
-            <div style="display: inline-flex; background: white; border-radius: 12px; padding: 0.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid #e2e8f0;">
-                <button id="showLess" style="padding: 0.75rem 1.5rem; background: #f7fafc; color: #4a5568; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: none;" onclick="showLessImages()">Show Less</button>
-                <button id="loadMore" style="padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;" onclick="loadMoreImages()">Load More Photos</button>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Property Gallery</h2>
+                <p class="section-subtitle">Take a visual tour of this beautiful home and its stunning features</p>
             </div>
-            <div id="imageCounter" style="margin-top: 1rem; color: #4a5568; font-size: 0.9rem;">Showing 12 of 39 photos</div>
-        </div>
-        
-       <div class="gallery-grid" id="galleryGrid">
+            
+            <!-- Gallery Controls -->
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <div style="display: inline-flex; background: white; border-radius: 12px; padding: 0.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid #e2e8f0;">
+                    <button id="showLess" style="padding: 0.75rem 1.5rem; background: #f7fafc; color: #4a5568; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: none;" onclick="showLessImages()">Show Less</button>
+                    <button id="loadMore" style="padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;" onclick="loadMoreImages()">Load More Photos</button>
+                </div>
+                <div id="imageCounter" style="margin-top: 1rem; color: #4a5568; font-size: 0.9rem;">Showing 12 of 39 photos</div>
+            </div>
+            
+            <div class="gallery-grid" id="galleryGrid">
   <!-- Initial 12 Images (Priority Load) -->
   <div class="gallery-item visible" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m131134841rd-w1280_h960.webp')">
     <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m131134841rd-w1280_h960.webp" alt="Beautiful exterior view of modern home" loading="eager">
@@ -1228,516 +1339,6 @@
 
 </section>
 
-<style>
-    .gallery-item.hidden {
-        display: none;
-    }
-    
-    .gallery-item.visible {
-        display: block;
-        animation: fadeInUp 0.6s ease-out;
-    }
-    
-    .gallery-item.loading {
-        animation: fadeInUp 0.6s ease-out;
-    }
-    
-    .gallery-item img[data-src] {
-        background: linear-gradient(135deg, #f7fafc, #e2e8f0);
-        min-height: 250px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 16px;
-    }
-    
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .loading-btn {
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .loading-btn:after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 20px;
-        height: 20px;
-        margin: -10px 0 0 -10px;
-        border: 2px solid transparent;
-        border-top-color: rgba(255,255,255,0.6);
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        opacity: 0;
-    }
-    
-    .loading-btn.loading:after {
-        opacity: 1;
-    }
-    
-    .loading-btn.loading {
-        color: transparent;
-    }
-    
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-    
-    @media (max-width: 768px) {
-        .gallery-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        #imageCounter {
-            font-size: 0.8rem;
-        }
-        
-        #loadMore, #showLess {
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-        }
-    }
-</style>
-
-<script>
-let currentlyVisible = 12;
-const totalImages = 39;
-const imagesPerLoad = 12;
-
-function loadMoreImages() {
-    const loadBtn = document.getElementById('loadMore');
-    const showLessBtn = document.getElementById('showLess');
-    const counter = document.getElementById('imageCounter');
-    const hiddenItems = document.querySelectorAll('.gallery-item.hidden');
-    
-    // Show loading state
-    loadBtn.classList.add('loading');
-    loadBtn.disabled = true;
-    
-    setTimeout(() => {
-        // Load next batch
-        const itemsToShow = Math.min(imagesPerLoad, hiddenItems.length);
-        
-        for (let i = 0; i < itemsToShow; i++) {
-            const item = hiddenItems[i];
-            const img = item.querySelector('img');
-            
-            // Load the image
-            if (img.dataset.src) {
-                img.src = img.dataset.src;
-                img.removeAttribute('data-src');
-            }
-            
-            // Show the item
-            item.classList.remove('hidden');
-            item.classList.add('visible');
-            
-            currentlyVisible++;
-        }
-        
-        // Update counter
-        counter.textContent = `Showing ${currentlyVisible} of ${totalImages} photos`;
-        
-        // Update buttons
-        loadBtn.classList.remove('loading');
-        loadBtn.disabled = false;
-        
-        if (currentlyVisible >= totalImages) {
-            loadBtn.style.display = 'none';
-        }
-        
-        showLessBtn.style.display = 'inline-block';
-        
-        // Track analytics
-        trackEvent('Gallery', 'Load More', `${currentlyVisible} photos`);
-        
-    }, 800);
-}
-
-function showLessImages() {
-    const loadBtn = document.getElementById('loadMore');
-    const showLessBtn = document.getElementById('showLess');
-    const counter = document.getElementById('imageCounter');
-    const allItems = document.querySelectorAll('.gallery-item');
-    
-    // Hide items beyond the first 12
-    for (let i = 12; i < allItems.length; i++) {
-        const item = allItems[i];
-        item.classList.remove('visible');
-        item.classList.add('hidden');
-        
-        // Reset image src to data-src for lazy loading
-        const img = item.querySelector('img');
-        if (img.src && !img.dataset.src) {
-            img.dataset.src = img.src;
-            img.src = '';
-        }
-    }
-    
-    currentlyVisible = 12;
-    
-    // Update UI
-    counter.textContent = `Showing ${currentlyVisible} of ${totalImages} photos`;
-    loadBtn.style.display = 'inline-block';
-    showLessBtn.style.display = 'none';
-    
-    // Scroll back to gallery
-    document.getElementById('galleryGrid').scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start' 
-    });
-    
-    // Track analytics
-    trackEvent('Gallery', 'Show Less', 'Collapsed gallery');
-}
-
-// Preload next batch on hover over load more button
-document.getElementById('loadMore').addEventListener('mouseenter', function() {
-    const hiddenItems = document.querySelectorAll('.gallery-item.hidden');
-    const itemsToPreload = Math.min(6, hiddenItems.length);
-    
-    for (let i = 0; i < itemsToPreload; i++) {
-        const img = hiddenItems[i].querySelector('img');
-        if (img.dataset.src) {
-            const preloadImg = new Image();
-            preloadImg.src = img.dataset.src;
-        }
-    }
-});
-
-// Intersection Observer for performance
-if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && entry.target.classList.contains('visible')) {
-                const img = entry.target.querySelector('img');
-                if (img.dataset.src) {
-                    img.src = img.dataset.src;
-                    img.removeAttribute('data-src');
-                }
-                observer.unobserve(entry.target);
-            }
-        });
-    }, {
-        rootMargin: '50px'
-    });
-    
-    // Observe all visible items
-    document.querySelectorAll('.gallery-item.visible').forEach(item => {
-        observer.observe(item);
-    });
-}
-</script>
-
-   <!-- Virtual Tour Section -->
-<section class="section" style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Virtual Tour Experience</h2>
-            <p class="section-subtitle">Take an immersive walkthrough of this stunning home from the comfort of your device</p>
-        </div>
-        
-        <div style="max-width: 1000px; margin: 0 auto;">
-            
-            <!-- Main Video Player -->
-            <div class="video-container" style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.15); border: 1px solid #e2e8f0; margin-bottom: 3rem;">
-                
-                <!-- Video Header -->
-                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2rem; color: white; text-align: center;">
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
-                        <div style="width: 60px; height: 60px; border-radius: 16px; background: rgba(255, 255, 255, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; backdrop-filter: blur(10px);">🏠</div>
-                        <div style="text-align: center;">
-                            <h3 style="font-size: clamp(1.25rem, 4vw, 1.75rem); font-weight: 700; margin: 0;">Complete Home Walkthrough</h3>
-                            <p style="margin: 0; opacity: 0.9; font-size: clamp(0.9rem, 3vw, 1rem);">Professional video tour of every room</p>
-                        </div>
-                    </div>
-                    
-                    <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; font-size: 0.9rem;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="font-size: 1.2rem;">⏱️</span>
-                            <span>52 Seconds</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="font-size: 1.2rem;">📱</span>
-                            <span>Mobile Optimized</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="font-size: 1.2rem;">📹</span>
-                            <span>HD Quality</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Video Player Container -->
-                <div style="display: flex; justify-content: center; padding: 2rem; background: #f8fafc;">
-                    <div style="position: relative; width: 100%; max-width: 400px; aspect-ratio: 9/16; background: #000; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.2);">
-                        <iframe 
-                            id="virtualTourVideo"
-                            style="width: 100%; height: 100%; border: none;"
-                            src="https://www.youtube.com/embed/AUNi1Tu9SuM?rel=0&modestbranding=1&showinfo=0"
-                            title="Virtual Tour - 16 Vieira Dr, Peabody MA"
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                            allowfullscreen
-                            loading="lazy"
-                        ></iframe>
-                    </div>
-                </div>
-                
-                <!-- Video Description -->
-                <div style="padding: 2rem;">
-                    <div style="background: rgba(102, 126, 234, 0.05); border-left: 4px solid #667eea; padding: 1.5rem; border-radius: 0 12px 12px 0; margin-bottom: 1.5rem;">
-                        <h4 style="font-size: 1.25rem; font-weight: 600; color: #1a202c; margin-bottom: 0.75rem;">What You'll See in This Tour</h4>
-                        <p style="color: #4a5568; line-height: 1.6; margin: 0;">
-                            Our professional video walkthrough takes you through every room of this beautiful home, highlighting the premium finishes, spacious layouts, and stunning features including the heated pool area. Perfect for getting a true feel of the property before your in-person visit.
-                        </p>
-                    </div>
-                    
-                    <!-- Tour Highlights -->
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 1rem; background: rgba(72, 187, 120, 0.05); border-radius: 12px; border: 1px solid rgba(72, 187, 120, 0.1);">
-                            <div style="width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #48bb78, #38a169); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.1rem; flex-shrink: 0;">🏠</div>
-                            <div>
-                                <div style="font-weight: 600; color: #1a202c; font-size: 0.9rem;">All Living Spaces</div>
-                                <div style="color: #4a5568; font-size: 0.8rem;">Every room showcased</div>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 1rem; background: rgba(102, 126, 234, 0.05); border-radius: 12px; border: 1px solid rgba(102, 126, 234, 0.1);">
-                            <div style="width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.1rem; flex-shrink: 0;">🏊</div>
-                            <div>
-                                <div style="font-weight: 600; color: #1a202c; font-size: 0.9rem;">Pool & Outdoor</div>
-                                <div style="color: #4a5568; font-size: 0.8rem;">Backyard paradise</div>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 1rem; background: rgba(240, 147, 251, 0.05); border-radius: 12px; border: 1px solid rgba(240, 147, 251, 0.1);">
-                            <div style="width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #f093fb, #f5576c); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.1rem; flex-shrink: 0;">✨</div>
-                            <div>
-                                <div style="font-weight: 600; color: #1a202c; font-size: 0.9rem;">Premium Finishes</div>
-                                <div style="color: #4a5568; font-size: 0.8rem;">Quality details</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Additional Tour Options -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
-                
-                <!-- Schedule In-Person Tour CTA -->
-                <div style="background: linear-gradient(135deg, #48bb78 0%, #38f9d7 100%); border-radius: 20px; padding: 2.5rem; color: white; text-align: center; position: relative; overflow: hidden;">
-                    <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); opacity: 0.5;"></div>
-                    <div style="position: absolute; bottom: -30px; left: -30px; width: 80px; height: 80px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); opacity: 0.3;"></div>
-                    
-                    <div style="position: relative; z-index: 2;">
-                        <div style="width: 80px; height: 80px; border-radius: 20px; background: rgba(255, 255, 255, 0.15); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; backdrop-filter: blur(10px); font-size: 2rem;">📅</div>
-                        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">Ready for an In-Person Tour?</h3>
-                        <p style="margin-bottom: 2rem; opacity: 0.95; line-height: 1.6;">
-                            Loved what you saw? Experience the home's true beauty and feel the space in person with a private showing.
-                        </p>
-                        <a href="#contact" style="background: white; color: #48bb78; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.1)'">
-                            Schedule Private Tour →
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Share Tour -->
-                <div style="background: white; border-radius: 20px; padding: 2.5rem; text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,0.08); border: 1px solid #e2e8f0;">
-                    <div style="width: 80px; height: 80px; border-radius: 20px; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 2rem; color: white;">📱</div>
-                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: #1a202c;">Share This Tour</h3>
-                    <p style="margin-bottom: 2rem; color: #4a5568; line-height: 1.6;">
-                        Found your dream home? Share this virtual tour with family and friends to get their thoughts.
-                    </p>
-                    
-                    <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-                        <button onclick="shareVirtualTour('whatsapp')" style="background: #25D366; color: white; border: none; padding: 0.75rem 1.25rem; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.9rem; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">WhatsApp</button>
-                        <button onclick="shareVirtualTour('email')" style="background: #667eea; color: white; border: none; padding: 0.75rem 1.25rem; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.9rem; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Email</button>
-                        <button onclick="shareVirtualTour('copy')" style="background: #718096; color: white; border: none; padding: 0.75rem 1.25rem; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.9rem; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Copy Link</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<style>
-    @media (max-width: 768px) {
-        .video-container .video-player-container {
-            padding: 1rem !important;
-        }
-        
-        .video-container .video-player-container > div {
-            max-width: 300px !important;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .video-container .video-player-container > div {
-            max-width: 250px !important;
-        }
-    }
-</style>
-
-<style>
-    /* Custom video controls styling */
-    .video-container video::-webkit-media-controls-panel {
-        background: linear-gradient(transparent, rgba(0,0,0,0.8));
-    }
-    
-    .video-container video::-webkit-media-controls-play-button,
-    .video-container video::-webkit-media-controls-volume-slider,
-    .video-container video::-webkit-media-controls-timeline {
-        filter: brightness(1.2);
-    }
-    
-    /* Responsive video adjustments */
-    @media (max-width: 768px) {
-        .video-container {
-            border-radius: 16px !important;
-        }
-        
-        #playButton {
-            width: 80px !important;
-            height: 80px !important;
-        }
-        
-        #playButton div {
-            border-left-width: 20px !important;
-            border-top-width: 12px !important;
-            border-bottom-width: 12px !important;
-        }
-    }
-    
-    /* Loading animation for video */
-    @keyframes loading {
-        0% { opacity: 0.6; }
-        50% { opacity: 1; }
-        100% { opacity: 0.6; }
-    }
-    
-    .video-loading {
-        animation: loading 1.5s ease-in-out infinite;
-    }
-</style>
-
-<script>
-    // Video player functionality
-    function playVideo() {
-        const video = document.getElementById('virtualTourVideo');
-        const playButton = document.getElementById('playButton');
-        
-        video.play();
-        playButton.style.display = 'none';
-        
-        // Track video play event
-        trackEvent('Engagement', 'Virtual Tour Play', 'Video Start');
-    }
-    
-    // Hide play button when video plays
-    document.getElementById('virtualTourVideo').addEventListener('play', function() {
-        document.getElementById('playButton').style.display = 'none';
-    });
-    
-    // Show play button when video pauses
-    document.getElementById('virtualTourVideo').addEventListener('pause', function() {
-        document.getElementById('playButton').style.display = 'flex';
-    });
-    
-    // Track video completion
-    document.getElementById('virtualTourVideo').addEventListener('ended', function() {
-        trackEvent('Engagement', 'Virtual Tour Complete', 'Video Finished');
-        document.getElementById('playButton').style.display = 'flex';
-    });
-    
-    // Share functionality
-    function shareVirtualTour(platform) {
-        const url = encodeURIComponent(window.location.href);
-        const title = encodeURIComponent('Virtual Tour - 16 Vieira Dr, Peabody MA - $949,900');
-        const text = encodeURIComponent('Check out this amazing virtual tour of a beautiful 3-bed, 3-bath home in Peabody! 🏠');
-        
-        switch(platform) {
-            case 'whatsapp':
-                window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
-                trackEvent('Social', 'Share WhatsApp', 'Virtual Tour');
-                break;
-                
-            case 'email':
-                const subject = encodeURIComponent('Virtual Tour - Beautiful Home in Peabody, MA');
-                const body = encodeURIComponent(`Hi!\n\nI found this amazing home and wanted to share the virtual tour with you:\n\n16 Vieira Dr, Peabody, MA 01960\nPrice: $949,900\n3 Bedrooms, 3 Bathrooms, 2,330 sq ft\n\nWatch the virtual tour here: ${decodeURIComponent(url)}\n\nWhat do you think? I'd love to hear your thoughts!\n\nBest regards`);
-                window.location.href = `mailto:?subject=${subject}&body=${body}`;
-                trackEvent('Social', 'Share Email', 'Virtual Tour');
-                break;
-                
-            case 'copy':
-                if (navigator.clipboard) {
-                    navigator.clipboard.writeText(window.location.href).then(function() {
-                        // Show success message
-                        const button = event.target;
-                        const originalText = button.textContent;
-                        button.textContent = 'Copied!';
-                        button.style.background = '#48bb78';
-                        setTimeout(() => {
-                            button.textContent = originalText;
-                            button.style.background = '#718096';
-                        }, 2000);
-                        trackEvent('Social', 'Copy Link', 'Virtual Tour');
-                    });
-                } else {
-                    // Fallback for older browsers
-                    prompt('Copy this link:', window.location.href);
-                }
-                break;
-        }
-    }
-    
-    // Video loading state
-    document.getElementById('virtualTourVideo').addEventListener('loadstart', function() {
-        this.parentElement.classList.add('video-loading');
-    });
-    
-    document.getElementById('virtualTourVideo').addEventListener('canplay', function() {
-        this.parentElement.classList.remove('video-loading');
-    });
-    
-    // Video progress tracking (for analytics)
-    let videoProgressTracked = {
-        '25': false,
-        '50': false,
-        '75': false
-    };
-    
-    document.getElementById('virtualTourVideo').addEventListener('timeupdate', function() {
-        const video = this;
-        const progress = (video.currentTime / video.duration) * 100;
-        
-        if (progress >= 25 && !videoProgressTracked['25']) {
-            trackEvent('Engagement', 'Virtual Tour 25%', 'Video Progress');
-            videoProgressTracked['25'] = true;
-        }
-        if (progress >= 50 && !videoProgressTracked['50']) {
-            trackEvent('Engagement', 'Virtual Tour 50%', 'Video Progress');
-            videoProgressTracked['50'] = true;
-        }
-        if (progress >= 75 && !videoProgressTracked['75']) {
-            trackEvent('Engagement', 'Virtual Tour 75%', 'Video Progress');
-            videoProgressTracked['75'] = true;
-        }
-    });
-</script>
-
     <section class="section section-dark">
         <div class="container">
             <div class="property-details-enhanced">
@@ -1769,18 +1370,6 @@ if ('IntersectionObserver' in window) {
                                 <div class="spec-checkmark">✓</div>
                                 <span class="spec-text">Gas water heater and range</span>
                             </li>
-                            <li class="spec-item">
-                                <div class="spec-checkmark">✓</div>
-                                <span class="spec-text">Dishwasher and disposal</span>
-                            </li>
-                            <li class="spec-item">
-                                <div class="spec-checkmark">✓</div>
-                                <span class="spec-text">Microwave and refrigerator</span>
-                            </li>
-                            <li class="spec-item">
-                                <div class="spec-checkmark">✓</div>
-                                <span class="spec-text">Washer and dryer included</span>
-                            </li>
                         </ul>
                     </div>
                     
@@ -1800,23 +1389,11 @@ if ('IntersectionObserver' in window) {
                             </li>
                             <li class="spec-item">
                                 <div class="spec-checkmark">✓</div>
-                                <span class="spec-text">Bedroom 3: 15.3 × 10.3</span>
-                            </li>
-                            <li class="spec-item">
-                                <div class="spec-checkmark">✓</div>
                                 <span class="spec-text">Living room: 18.3 × 20.5</span>
                             </li>
                             <li class="spec-item spec-highlight">
                                 <div class="spec-checkmark">✓</div>
                                 <span class="spec-text">Family room: 25.6 × 19.5</span>
-                            </li>
-                            <li class="spec-item">
-                                <div class="spec-checkmark">✓</div>
-                                <span class="spec-text">Kitchen: 13.3 × 11.2</span>
-                            </li>
-                            <li class="spec-item">
-                                <div class="spec-checkmark">✓</div>
-                                <span class="spec-text">Dining room: 13.3 × 11.7</span>
                             </li>
                         </ul>
                     </div>
@@ -1838,18 +1415,6 @@ if ('IntersectionObserver' in window) {
                             <li class="spec-item">
                                 <div class="spec-checkmark">✓</div>
                                 <span class="spec-text">Natural gas utilities</span>
-                            </li>
-                            <li class="spec-item">
-                                <div class="spec-checkmark">✓</div>
-                                <span class="spec-text">Concrete perimeter foundation</span>
-                            </li>
-                            <li class="spec-item">
-                                <div class="spec-checkmark">✓</div>
-                                <span class="spec-text">Shingle roof</span>
-                            </li>
-                            <li class="spec-item">
-                                <div class="spec-checkmark">✓</div>
-                                <span class="spec-text">Frame and brick construction</span>
                             </li>
                             <li class="spec-item spec-highlight">
                                 <div class="spec-checkmark">✓</div>
@@ -1879,14 +1444,6 @@ if ('IntersectionObserver' in window) {
                             <li class="spec-item">
                                 <div class="spec-checkmark">✓</div>
                                 <span class="spec-text">MLS #73427376</span>
-                            </li>
-                            <li class="spec-item">
-                                <div class="spec-checkmark">✓</div>
-                                <span class="spec-text">Essex County</span>
-                            </li>
-                            <li class="spec-item">
-                                <div class="spec-checkmark">✓</div>
-                                <span class="spec-text">Zoning: R-1</span>
                             </li>
                         </ul>
                     </div>
@@ -1939,33 +1496,8 @@ if ('IntersectionObserver' in window) {
                         </div>
                         
                         <div class="form-group">
-                            <label for="timeframe">Timeframe to Purchase</label>
-                            <select id="timeframe" name="timeframe">
-                                <option value="">Select timeframe</option>
-                                <option value="immediately">Immediately (0-30 days)</option>
-                                <option value="1-3-months">1-3 months</option>
-                                <option value="3-6-months">3-6 months</option>
-                                <option value="6-12-months">6-12 months</option>
-                                <option value="over-1-year">Over 1 year</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="tourPreference">Preferred Tour Time</label>
-                            <select id="tourPreference" name="tourPreference">
-                                <option value="">Select preference</option>
-                                <option value="weekday-morning">Weekday Morning</option>
-                                <option value="weekday-afternoon">Weekday Afternoon</option>
-                                <option value="weekday-evening">Weekday Evening</option>
-                                <option value="weekend-morning">Weekend Morning</option>
-                                <option value="weekend-afternoon">Weekend Afternoon</option>
-                                <option value="anytime">Anytime works</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
                             <label for="message">Questions or Comments</label>
-                            <textarea id="message" name="message" rows="4" placeholder="Tell us what interests you most about this property, any specific questions you have, or additional information that would help us serve you better..."></textarea>
+                            <textarea id="message" name="message" rows="4" placeholder="Tell us what interests you most about this property..."></textarea>
                         </div>
                         
                         <button type="submit" class="btn btn-primary submit-btn">
@@ -1974,11 +1506,11 @@ if ('IntersectionObserver' in window) {
                         </button>
                         
                         <div id="form-success" class="form-message success" style="display: none;">
-                            <strong>Thank you!</strong> Your message has been sent successfully. We'll contact you within 24 hours to schedule your tour.
+                            <strong>Thank you!</strong> Your message has been sent successfully. We'll contact you within 24 hours.
                         </div>
                         
                         <div id="form-error" class="form-message error" style="display: none;">
-                            <strong>Oops!</strong> There was an issue sending your message. Please try calling us directly at (857) 312-3214.
+                            <strong>Oops!</strong> There was an issue sending your message. Please try calling us directly.
                         </div>
                     </form>
                 </div>
@@ -1987,36 +1519,29 @@ if ('IntersectionObserver' in window) {
                     <h3 class="contact-title">Contact Information</h3>
                     
                     <div class="agent-info">
-                        <div class="agent-name">Listed by
-                        Gercilaine DeSouza</div>
-                                                <div class="agent-company">Brokered by
-                        Allison James Estates & Homes of MA, LLC</div>
-                                            </div>
+                        <div class="agent-name">Gercilaine DeSouza</div>
+                        <div class="agent-company">Allison James Estates & Homes of MA, LLC</div>
+                    </div>
                     
                     <div class="contact-details">
                         <div class="contact-item">
-                            <strong>📞 Phone:</strong>
+                            <strong>Phone:</strong>
                             <a href="tel:+18573123214">(857) 312-3214</a>
                         </div>
                         
                         <div class="contact-item">
-                            <strong>📧 Email:</strong>
+                            <strong>Email:</strong>
                             <a href="mailto:gerci.usa@gmail.com">gerci.usa@gmail.com</a>
                         </div>
                         
                         <div class="contact-item">
-                            <strong>🏠 Property:</strong>
-                            16 Vieira Dr, Peabody, MA 01960
+                            <strong>Property:</strong>
+                            <span>16 Vieira Dr, Peabody, MA 01960</span>
                         </div>
                         
                         <div class="contact-item">
-                            <strong>💰 Price:</strong>
-                            $949,900
-                        </div>
-                        
-                        <div class="contact-item">
-                            <strong>🏷️ MLS #:</strong>
-                            73427376
+                            <strong>Price:</strong>
+                            <span>$949,900</span>
                         </div>
                     </div>
                     
@@ -2524,159 +2049,158 @@ if ('IntersectionObserver' in window) {
             }
         });
     </script>
+     <!-- Enhanced Modern Footer with Mobile Optimization -->
+    <footer style="background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%); color: white; position: relative; overflow: hidden;">
+        <!-- Decorative background elements -->
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.05;">
+            <div style="position: absolute; top: 20%; left: 10%; width: 200px; height: 200px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2);"></div>
+            <div style="position: absolute; bottom: 30%; right: 15%; width: 150px; height: 150px; border-radius: 50%; background: linear-gradient(135deg, #48bb78, #38f9d7);"></div>
+            <div style="position: absolute; top: 50%; left: 60%; width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #f093fb, #f5576c);"></div>
+        </div>
 
-    <!-- Enhanced Modern Footer -->
-<footer style="background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%); color: white; position: relative; overflow: hidden;">
-    <!-- Decorative background elements -->
-    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.05;">
-        <div style="position: absolute; top: 20%; left: 10%; width: 200px; height: 200px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2);"></div>
-        <div style="position: absolute; bottom: 30%; right: 15%; width: 150px; height: 150px; border-radius: 50%; background: linear-gradient(135deg, #48bb78, #38f9d7);"></div>
-        <div style="position: absolute; top: 50%; left: 60%; width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #f093fb, #f5576c);"></div>
-    </div>
-
-    <div class="container" style="position: relative; z-index: 2; padding: 4rem 1rem 2rem;">
-        <!-- Main Footer Content -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
-            
-            <!-- Property Spotlight -->
-            <div style="background: rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 2.5rem; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
-                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-                    <div style="width: 60px; height: 60px; border-radius: 16px; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🏠</div>
-                    <div>
-                        <h4 style="font-size: 1.5rem; font-weight: 700; margin: 0; color: #48bb78;">16 Vieira Drive</h4>
-                        <p style="margin: 0; color: #a0aec0; font-size: 0.9rem;">Peabody, MA 01960</p>
-                    </div>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
-                    <div style="text-align: center; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px;">
-                        <div style="font-size: 1.75rem; font-weight: 700; color: #48bb78;">$949,900</div>
-                        <div style="font-size: 0.8rem; color: #a0aec0; text-transform: uppercase; letter-spacing: 0.05em;">List Price</div>
-                    </div>
-                    <div style="text-align: center; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px;">
-                        <div style="font-size: 1.75rem; font-weight: 700; color: #4299e1;">2,330</div>
-                        <div style="font-size: 0.8rem; color: #a0aec0; text-transform: uppercase; letter-spacing: 0.05em;">Sq Feet</div>
-                    </div>
-                </div>
-                <div style="background: rgba(72, 187, 120, 0.1); border: 1px solid rgba(72, 187, 120, 0.2); border-radius: 12px; padding: 1rem; text-align: center;">
-                    <p style="margin: 0; font-weight: 600; color: #48bb78; font-size: 0.9rem;">✨ Ready for Immediate Viewing</p>
-                </div>
-            </div>
-
-            <!-- Contact & Agent Info -->
-            <div style="background: rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 2.5rem; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
-                <h4 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; color: white; display: flex; align-items: center; gap: 0.5rem;">
-                    <span style="width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, #f093fb, #f5576c); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">📞</span>
-                    Contact Information
-                </h4>
+        <div class="container" style="position: relative; z-index: 2; padding: 4rem 1rem 2rem;">
+            <!-- Main Footer Content -->
+            <div id="footer-main-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
                 
-                <div style="space-y: 1.5rem;">
+                <!-- Property Spotlight -->
+                <div class="footer-card" style="background: rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 2.5rem; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                        <div style="width: 60px; height: 60px; border-radius: 16px; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0;">🏠</div>
+                        <div style="flex: 1; min-width: 0;">
+                            <h4 style="font-size: clamp(1.25rem, 4vw, 1.5rem); font-weight: 700; margin: 0; color: #48bb78; word-break: break-word;">16 Vieira Drive</h4>
+                            <p style="margin: 0; color: #a0aec0; font-size: clamp(0.8rem, 3vw, 0.9rem);">Peabody, MA 01960</p>
+                        </div>
+                    </div>
+                    <div class="price-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div style="text-align: center; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px;">
+                            <div style="font-size: clamp(1.25rem, 5vw, 1.75rem); font-weight: 700; color: #48bb78; word-break: break-word;">$949,900</div>
+                            <div style="font-size: clamp(0.7rem, 2.5vw, 0.8rem); color: #a0aec0; text-transform: uppercase; letter-spacing: 0.05em;">List Price</div>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px;">
+                            <div style="font-size: clamp(1.25rem, 5vw, 1.75rem); font-weight: 700; color: #4299e1;">2,330</div>
+                            <div style="font-size: clamp(0.7rem, 2.5vw, 0.8rem); color: #a0aec0; text-transform: uppercase; letter-spacing: 0.05em;">Sq Feet</div>
+                        </div>
+                    </div>
+                    <div style="background: rgba(72, 187, 120, 0.1); border: 1px solid rgba(72, 187, 120, 0.2); border-radius: 12px; padding: 1rem; text-align: center;">
+                        <p style="margin: 0; font-weight: 600; color: #48bb78; font-size: clamp(0.8rem, 3vw, 0.9rem);">✨ Ready for Immediate Viewing</p>
+                    </div>
+                </div>
+
+                <!-- Contact & Agent Info -->
+                <div class="footer-card" style="background: rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 2.5rem; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <h4 style="font-size: clamp(1.25rem, 4vw, 1.5rem); font-weight: 700; margin-bottom: 1.5rem; color: white; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                        <span style="width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, #f093fb, #f5576c); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">📞</span>
+                        <span>Contact Information</span>
+                    </h4>
+                    
                     <div style="margin-bottom: 1.5rem;">
-                        <div style="font-weight: 600; color: #e2e8f0; margin-bottom: 0.5rem;">Professional Agent</div>
-                        <div style="color: #a0aec0; font-size: 0.9rem;">Allison James Estates & Homes of MA, LLC</div>
+                        <div style="font-weight: 600; color: #e2e8f0; margin-bottom: 0.5rem; font-size: clamp(0.9rem, 3vw, 1rem);">Gercilaine DeSouza</div>
+                        <div style="color: #a0aec0; font-size: clamp(0.8rem, 2.5vw, 0.9rem); line-height: 1.4;">Allison James Estates & Homes of MA, LLC</div>
                     </div>
                     
                     <div style="display: flex; flex-direction: column; gap: 1rem;">
-                        <a href="tel:+18573123214" style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px; text-decoration: none; color: white; transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.1);" onmouseover="this.style.background='rgba(72, 187, 120, 0.1)'; this.style.borderColor='rgba(72, 187, 120, 0.3)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.borderColor='rgba(255, 255, 255, 0.1)'">
-                            <div style="width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #48bb78, #38a169); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">📱</div>
-                            <div>
-                                <div style="font-weight: 600;">(857) 312-3214</div>
-                                <div style="font-size: 0.8rem; color: #a0aec0;">Call or Text Anytime</div>
+                        <a href="tel:+18573123214" class="footer-contact-link" style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px; text-decoration: none; color: white; transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <div style="width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #48bb78, #38a169); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">📱</div>
+                            <div style="flex: 1; min-width: 0;">
+                                <div style="font-weight: 600; font-size: clamp(0.9rem, 3vw, 1rem);">(857) 312-3214</div>
+                                <div style="font-size: clamp(0.7rem, 2.5vw, 0.8rem); color: #a0aec0;">Call or Text Anytime</div>
                             </div>
                         </a>
                         
-                        <a href="mailto:gerci.usa@gmail.com" style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px; text-decoration: none; color: white; transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.1);" onmouseover="this.style.background='rgba(102, 126, 234, 0.1)'; this.style.borderColor='rgba(102, 126, 234, 0.3)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.borderColor='rgba(255, 255, 255, 0.1)'">
-                            <div style="width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">📧</div>
-                            <div>
-                                <div style="font-weight: 600; font-size: 0.9rem;">gerci.usa@gmail.com</div>
-                                <div style="font-size: 0.8rem; color: #a0aec0;">Email Response Within 2 Hours</div>
+                        <a href="mailto:gerci.usa@gmail.com" class="footer-contact-link" style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px; text-decoration: none; color: white; transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <div style="width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">📧</div>
+                            <div style="flex: 1; min-width: 0;">
+                                <div style="font-weight: 600; font-size: clamp(0.8rem, 2.5vw, 0.9rem); word-break: break-all;">gerci.usa@gmail.com</div>
+                                <div style="font-size: clamp(0.7rem, 2.5vw, 0.8rem); color: #a0aec0;">Email Response Within 2 Hours</div>
                             </div>
                         </a>
                     </div>
                 </div>
-            </div>
 
-            <!-- Neighborhood Insights -->
-            <div style="background: rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 2.5rem; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
-                <h4 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; color: white; display: flex; align-items: center; gap: 0.5rem;">
-                    <span style="width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, #43e97b, #38f9d7); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">🏘️</span>
-                    Neighborhood Highlights
-                </h4>
-                
-                <div style="display: flex; flex-direction: column; gap: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
-                        <span style="color: #a0aec0; font-size: 0.9rem;">Median Home Price</span>
-                        <span style="color: #48bb78; font-weight: 600;">$676,950</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
-                        <span style="color: #a0aec0; font-size: 0.9rem;">Walk Score</span>
-                        <span style="color: #4299e1; font-weight: 600;">85/100</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
-                        <span style="color: #a0aec0; font-size: 0.9rem;">School Rating</span>
-                        <span style="color: #f093fb; font-weight: 600;">8.5/10</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0;">
-                        <span style="color: #a0aec0; font-size: 0.9rem;">Days on Market</span>
-                        <span style="color: #fa709a; font-weight: 600;">13 Days</span>
-                    </div>
-                </div>
-                
-                <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(67, 233, 123, 0.1); border: 1px solid rgba(67, 233, 123, 0.2); border-radius: 12px; text-align: center;">
-                    <div style="font-weight: 600; color: #43e97b; margin-bottom: 0.25rem;">Premium Location</div>
-                    <div style="font-size: 0.8rem; color: #a0aec0;">Lynn Woods Neighborhood</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Call-to-Action Banner -->
-        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; padding: 2.5rem; text-align: center; margin-bottom: 3rem; position: relative; overflow: hidden;">
-            <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: float 6s ease-in-out infinite;"></div>
-            
-            <h3 style="font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 1rem; position: relative; z-index: 2;">Ready to Make This Your Home?</h3>
-            <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9; max-width: 600px; margin-left: auto; margin-right: auto; position: relative; z-index: 2;">
-                Don't wait - exceptional properties like this sell quickly in today's market.
-            </p>
-            
-            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 2;">
-                <a href="#contact" style="background: rgba(255, 255, 255, 0.15); color: white; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);" onmouseover="this.style.background='rgba(255, 255, 255, 0.25)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.15)'; this.style.transform='translateY(0)'">
-                    📅 Schedule Private Tour
-                </a>
-                <a href="tel:+18573123214" style="background: white; color: #667eea; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.1)'">
-                    📞 Call Now: (857) 312-3214
-                </a>
-            </div>
-        </div>
-
-        <!-- Bottom Footer -->
-        <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem;">
-            <div style="display: flex; justify-content: between; align-items: center; flex-wrap: wrap; gap: 2rem;">
-                <div style="flex: 1;">
-                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                        <div style="width: 50px; height: 50px; border-radius: 16px; background: linear-gradient(135deg, #48bb78, #38a169); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🏡</div>
-                        <div>
-                            <div style="font-weight: 700; font-size: 1.1rem;">16Vieira.com</div>
-                            <div style="color: #a0aec0; font-size: 0.8rem;">Your Dream Home Awaits</div>
+                <!-- Neighborhood Insights -->
+                <div class="footer-card" style="background: rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 2.5rem; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <h4 style="font-size: clamp(1.25rem, 4vw, 1.5rem); font-weight: 700; margin-bottom: 1.5rem; color: white; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                        <span style="width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, #43e97b, #38f9d7); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">🏘️</span>
+                        <span>Neighborhood Highlights</span>
+                    </h4>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div class="neighborhood-stat" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <span style="color: #a0aec0; font-size: clamp(0.8rem, 2.5vw, 0.9rem);">Median Home Price</span>
+                            <span style="color: #48bb78; font-weight: 600; font-size: clamp(0.8rem, 2.5vw, 0.9rem);">$676,950</span>
+                        </div>
+                        <div class="neighborhood-stat" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <span style="color: #a0aec0; font-size: clamp(0.8rem, 2.5vw, 0.9rem);">Walk Score</span>
+                            <span style="color: #4299e1; font-weight: 600; font-size: clamp(0.8rem, 2.5vw, 0.9rem);">85/100</span>
+                        </div>
+                        <div class="neighborhood-stat" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <span style="color: #a0aec0; font-size: clamp(0.8rem, 2.5vw, 0.9rem);">School Rating</span>
+                            <span style="color: #f093fb; font-weight: 600; font-size: clamp(0.8rem, 2.5vw, 0.9rem);">8.5/10</span>
+                        </div>
+                        <div class="neighborhood-stat" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0;">
+                            <span style="color: #a0aec0; font-size: clamp(0.8rem, 2.5vw, 0.9rem);">Days on Market</span>
+                            <span style="color: #fa709a; font-weight: 600; font-size: clamp(0.8rem, 2.5vw, 0.9rem);">13 Days</span>
                         </div>
                     </div>
-                    <p style="color: #a0aec0; font-size: 0.9rem; line-height: 1.5; margin: 0;">
-                        © 2025 Allison James Estates & Homes of MA, LLC. All rights reserved.<br>
-                        <span style="color: #718096; font-size: 0.8rem;">MLS #73427376 • Equal Housing Opportunity • Licensed Real Estate Professionals</span>
-                    </p>
+                    
+                    <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(67, 233, 123, 0.1); border: 1px solid rgba(67, 233, 123, 0.2); border-radius: 12px; text-align: center;">
+                        <div style="font-weight: 600; color: #43e97b; margin-bottom: 0.25rem; font-size: clamp(0.8rem, 3vw, 0.9rem);">Premium Location</div>
+                        <div style="font-size: clamp(0.7rem, 2.5vw, 0.8rem); color: #a0aec0;">Lynn Woods Neighborhood</div>
+                    </div>
                 </div>
+            </div>
+
+            <!-- Call-to-Action Banner -->
+            <div class="footer-cta" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; padding: 2.5rem; text-align: center; margin-bottom: 3rem; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: float 6s ease-in-out infinite;"></div>
                 
-                <div style="text-align: right;">
-                    <div style="background: rgba(72, 187, 120, 0.1); border: 1px solid rgba(72, 187, 120, 0.2); border-radius: 12px; padding: 1.5rem;">
-                        <p style="color: #48bb78; font-weight: 600; margin: 0 0 0.5rem 0; font-size: 0.9rem;">Immediate Response Guaranteed</p>
-                        <div style="display: flex; align-items: center; gap: 0.5rem; justify-content: flex-end;">
-                            <div style="width: 8px; height: 8px; border-radius: 50%; background: #48bb78; animation: pulse 2s infinite;"></div>
-                            <span style="color: #a0aec0; font-size: 0.8rem;">Available 7 Days a Week</span>
+                <h3 style="font-size: clamp(1.25rem, 4vw, 2rem); font-weight: 700; margin-bottom: 1rem; position: relative; z-index: 2;">Ready to Make This Your Home?</h3>
+                <p style="font-size: clamp(1rem, 3vw, 1.1rem); margin-bottom: 2rem; opacity: 0.9; max-width: 600px; margin-left: auto; margin-right: auto; position: relative; z-index: 2; line-height: 1.5;">
+                    Don't wait - exceptional properties like this sell quickly in today's market.
+                </p>
+                
+                <div class="footer-cta-buttons" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 2;">
+                    <a href="#contact" class="footer-cta-btn" style="background: rgba(255, 255, 255, 0.15); color: white; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); min-width: 200px; font-size: clamp(0.9rem, 2.5vw, 1rem);">
+                        📅 Schedule Private Tour
+                    </a>
+                    <a href="tel:+18573123214" class="footer-cta-btn" style="background: white; color: #667eea; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.1); min-width: 200px; font-size: clamp(0.9rem, 2.5vw, 1rem);">
+                        📞 Call Now: (857) 312-3214
+                    </a>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem;">
+                <div class="footer-bottom" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+                    <div style="flex: 1; min-width: 0;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                            <div style="width: 50px; height: 50px; border-radius: 16px; background: linear-gradient(135deg, #48bb78, #38a169); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0;">🏡</div>
+                            <div style="flex: 1; min-width: 0;">
+                                <div style="font-weight: 700; font-size: clamp(1rem, 3vw, 1.1rem);">16Vieira.com</div>
+                                <div style="color: #a0aec0; font-size: clamp(0.7rem, 2.5vw, 0.8rem);">Your Dream Home Awaits</div>
+                            </div>
+                        </div>
+                        <p style="color: #a0aec0; font-size: clamp(0.8rem, 2.5vw, 0.9rem); line-height: 1.5; margin: 0;">
+                            © 2025 Allison James Estates & Homes of MA, LLC. All rights reserved.<br>
+                            <span style="color: #718096; font-size: clamp(0.7rem, 2vw, 0.8rem);">MLS #73427376 • Equal Housing Opportunity • Licensed Real Estate Professionals</span>
+                        </p>
+                    </div>
+                    
+                    <div class="footer-availability" style="text-align: right;">
+                        <div style="background: rgba(72, 187, 120, 0.1); border: 1px solid rgba(72, 187, 120, 0.2); border-radius: 12px; padding: 1.5rem;">
+                            <p style="color: #48bb78; font-weight: 600; margin: 0 0 0.5rem 0; font-size: clamp(0.8rem, 2.5vw, 0.9rem);">Immediate Response Guaranteed</p>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; justify-content: flex-end;">
+                                <div style="width: 8px; height: 8px; border-radius: 50%; background: #48bb78; animation: pulse 2s infinite;"></div>
+                                <span style="color: #a0aec0; font-size: clamp(0.7rem, 2vw, 0.8rem);">Available 7 Days a Week</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </footer>
 
+    <!-- Footer-specific styles -->
     <style>
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
@@ -2688,24 +2212,109 @@ if ('IntersectionObserver' in window) {
             50% { opacity: 0.5; transform: scale(1.2); }
         }
 
+        .footer-contact-link:hover {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .footer-cta-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Mobile optimizations for footer */
         @media (max-width: 768px) {
-            footer .container > div:first-child {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+            #footer-main-grid {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
             }
-            
-            footer .container > div:last-child > div {
-                flex-direction: column;
-                text-align: center;
-                gap: 1.5rem;
+
+            .footer-card {
+                padding: 2rem 1.5rem !important;
             }
-            
-            footer .container > div:last-child > div > div:last-child {
-                text-align: center;
+
+            .price-grid {
+                gap: 0.75rem !important;
+            }
+
+            .neighborhood-stat {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 0.25rem !important;
+                text-align: left !important;
+                padding: 0.5rem 0 !important;
+            }
+
+            .footer-cta {
+                padding: 2rem 1.5rem !important;
+            }
+
+            .footer-cta-buttons {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 0.75rem !important;
+            }
+
+            .footer-cta-btn {
+                width: 100% !important;
+                min-width: auto !important;
+                padding: 1rem !important;
+            }
+
+            .footer-bottom {
+                flex-direction: column !important;
+                text-align: center !important;
+                gap: 1.5rem !important;
+            }
+
+            .footer-availability {
+                text-align: center !important;
+                width: 100% !important;
+            }
+
+            .footer-availability > div {
+                padding: 1rem !important;
+            }
+
+            .footer-availability > div > div {
+                justify-content: center !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-card {
+                padding: 1.5rem 1rem !important;
+            }
+
+            .footer-cta {
+                padding: 1.5rem 1rem !important;
+            }
+
+            .footer-contact-link {
+                padding: 0.75rem !important;
+                gap: 0.75rem !important;
+            }
+
+            .footer-contact-link > div:first-child {
+                width: 35px !important;
+                height: 35px !important;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 360px) {
+            #footer-main-grid {
+                gap: 1.5rem !important;
+            }
+
+            .footer-card {
+                padding: 1.25rem 0.75rem !important;
+            }
+
+            .footer-cta {
+                padding: 1.25rem 0.75rem !important;
             }
         }
     </style>
-</footer>
 
     <!-- Additional CSS for keyboard navigation -->
     <style>
@@ -2730,19 +2339,6 @@ if ('IntersectionObserver' in window) {
         
         .skip-link:focus {
             top: 6px;
-        }
-
-        @media (max-width: 768px) {
-            footer > .container > div:first-child {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            
-            footer .bottom-footer > div {
-                flex-direction: column;
-                text-align: center;
-                gap: 1rem;
-            }
         }
     </style>
 

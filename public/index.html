@@ -2172,135 +2172,129 @@ img {
 </section>
 
     <section class="contact-section" id="contact">
-        <div class="container">
-            <!-- Header da seção -->
-            <div class="contact-header">
-                <h2 class="contact-title">Get in Touch</h2>
-                <p class="contact-subtitle">Ready to schedule your private tour? Fill out the form below and we'll get back to you within 24 hours</p>
-            </div>
+  <div class="container">
+    <!-- Header -->
+    <div class="contact-header">
+      <h2 class="contact-title">Get in Touch</h2>
+      <p class="contact-subtitle">Choose how you want to contact us about 16 Vieira Dr — no form needed.</p>
+    </div>
 
-            <!-- Layout principal -->
-            <div class="contact-layout">
-                <!-- Card do formulário -->
-                <div class="contact-form-card">
-                    <h3 class="form-title">Schedule Your Tour</h3>
-                    
-                    <form id="contactForm" class="modern-form">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label" for="firstName">First Name *</label>
-                                <input type="text" id="firstName" name="firstName" class="form-input" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="lastName">Last Name *</label>
-                                <input type="text" id="lastName" name="lastName" class="form-input" required>
-                            </div>
-                        </div>
+    <!-- Layout -->
+    <div class="contact-layout">
+      <!-- Quick actions (no form) -->
+      <div class="contact-form-card" aria-labelledby="quick-contact-title">
+        <h3 class="form-title" id="quick-contact-title">Quick Contact Options</h3>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label" for="email">Email Address *</label>
-                                <input type="email" id="email" name="email" class="form-input" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="phone">Phone Number *</label>
-                                <input type="tel" id="phone" name="phone" class="form-input" required>
-                            </div>
-                        </div>
+        <div style="display:grid;grid-template-columns:1fr;gap:1rem">
+          <!-- EMAIL -->
+          <a
+            class="btn"
+            style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff"
+            href="mailto:gerci.usa@gmail.com?subject=Inquiry%3A%2016%20Vieira%20Dr%2C%20Peabody%20MA&body=Hello%20Gercilaine%2C%0A%0AI%27m%20interested%20in%2016%20Vieira%20Dr%2C%20Peabody%20MA.%20Could%20we%20schedule%20a%20tour%3F%0A%0AThanks!"
+            aria-label="Send an email about 16 Vieira Dr"
+            onclick="if(typeof trackEvent!=='undefined'){trackEvent('Contact','Email','mailto');}"
+          >
+            📧 Email Realtor
+          </a>
 
-                        <div class="form-group">
-                            <label class="form-label" for="financing">Financing Status</label>
-                            <select id="financing" name="financing" class="form-select">
-                                <option value="">Select your financing situation</option>
-                                <option value="pre-approved">Pre-approved for mortgage</option>
-                                <option value="need-financing">Need financing assistance</option>
-                                <option value="cash-buyer">Cash buyer</option>
-                                <option value="exploring">Just exploring options</option>
-                            </select>
-                        </div>
+          <!-- WHATSAPP -->
+          <a
+            class="btn"
+            style="background:#25d366;color:#fff"
+            href="https://wa.me/18573123214?text=Hi%20Gercilaine!%20I%27m%20interested%20in%2016%20Vieira%20Dr%2C%20Peabody%20MA.%20Can%20we%20schedule%20a%20tour%3F"
+            target="_blank" rel="noopener"
+            aria-label="Open WhatsApp chat with Gercilaine"
+            onclick="if(typeof trackEvent!=='undefined'){trackEvent('Contact','WhatsApp','wa.me');}"
+          >
+            💬 WhatsApp (857) 312-3214
+          </a>
 
-                        <div class="form-group">
-                            <label class="form-label" for="message">Questions or Special Requests</label>
-                            <textarea id="message" name="message" class="form-textarea" placeholder="Tell us what interests you most about this property, preferred tour times, or any specific questions..."></textarea>
-                        </div>
+          <!-- SMS -->
+          <a
+            class="btn"
+            style="background:#1a202c;color:#fff"
+            href="sms:+18573123214?&body=Hi%20Gercilaine%2C%20I%27m%20interested%20in%2016%20Vieira%20Dr.%20Can%20we%20schedule%20a%20tour%3F"
+            aria-label="Send SMS to Gercilaine"
+            onclick="if(typeof trackEvent!=='undefined'){trackEvent('Contact','SMS','sms');}"
+          >
+            ✉️ SMS (857) 312-3214
+          </a>
 
-                        <button type="submit" class="submit-button">
-                            <span class="btn-text">Send Message & Schedule Tour</span>
-                            <span class="btn-loading" style="display: none;">Sending...</span>
-                        </button>
-
-                        <div id="form-success" class="form-message success">
-                          <strong>Message sent successfully!</strong> Your inquiry has been sent directly to the realtor. You will receive a response within 24 hours to schedule your private tour.
-                      </div>
-
-                      <div id="form-error" class="form-message error">
-                          <strong>Sending failed!</strong> There was a problem sending your message. Please try calling directly at (857) 312-3214 or email gerci.usa@gmail.com.
-                      </div>
-                    </form>
-                </div>
-
-                <!-- Card do agente -->
-                <div class="agent-card">
-                    <div class="agent-profile">
-                         <img src="/images/gercilaine-realtor.webp" 
-                          alt="Gercilaine DeSouza" 
-                          class="agent-avatar">
-                        <div class="agent-name">Gercilaine DeSouza</div>
-                        <div class="agent-role">Licensed Real Estate Professional</div>
-                        <div class="agent-company">Allison James Estates & Homes of MA, LLC</div>
-                    </div>
-
-                    <div class="contact-info">
-                        <div class="contact-info-item">
-                            <div class="contact-icon">📱</div>
-                            <div class="contact-info-text">
-                                <div class="contact-info-label">Phone</div>
-                                <div class="contact-info-value">
-                                    <a href="tel:+18573123214">(857) 312-3214</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="contact-info-item">
-                            <div class="contact-icon">📧</div>
-                            <div class="contact-info-text">
-                                <div class="contact-info-label">Email</div>
-                                <div class="contact-info-value">
-                                    <a href="mailto:gerci.usa@gmail.com">gerci.usa@gmail.com</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="contact-info-item">
-                            <div class="contact-icon">🏠</div>
-                            <div class="contact-info-text">
-                                <div class="contact-info-label">Property</div>
-                                <div class="contact-info-value">16 Vieira Dr, Peabody, MA 01960</div>
-                            </div>
-                        </div>
-
-                        <div class="contact-info-item">
-                            <div class="contact-icon">💰</div>
-                            <div class="contact-info-text">
-                                <div class="contact-info-label">Price</div>
-                                <div class="contact-info-value">$949,900</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="urgent-cta">
-                        <div class="urgent-cta-text">
-                            <strong>Need immediate assistance?</strong><br>
-                            Call or text for instant response
-                        </div>
-                        <a href="tel:+18573123214" class="urgent-cta-button">
-                            Call Now: (857) 312-3214
-                        </a>
-                    </div>
-                </div>
-            </div>
+          <!-- CALL (mantive como atalho útil) -->
+          <a
+            class="btn"
+            style="background:#48bb78;color:#fff"
+            href="tel:+18573123214"
+            aria-label="Call Gercilaine now"
+            onclick="if(typeof trackEvent!=='undefined'){trackEvent('Contact','Phone','tel');}"
+          >
+            📞 Call Now
+          </a>
         </div>
-    </section>
+
+        <div style="margin-top:1.25rem;font-size:.9rem;color:#4a5568;text-align:center">
+          Prefer to write later? Save: <strong>gerci.usa@gmail.com</strong>
+        </div>
+      </div>
+
+      <!-- Agent card (mantido) -->
+      <div class="agent-card">
+        <div class="agent-profile">
+          <img src="/images/gercilaine-realtor.webp" alt="Gercilaine DeSouza" class="agent-avatar">
+          <div class="agent-name">Gercilaine DeSouza</div>
+          <div class="agent-role">Licensed Real Estate Professional</div>
+          <div class="agent-company">Allison James Estates & Homes of MA, LLC</div>
+        </div>
+
+        <div class="contact-info">
+          <div class="contact-info-item">
+            <div class="contact-icon">📱</div>
+            <div class="contact-info-text">
+              <div class="contact-info-label">Phone</div>
+              <div class="contact-info-value">
+                <a href="tel:+18573123214">(857) 312-3214</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="contact-icon">📧</div>
+            <div class="contact-info-text">
+              <div class="contact-info-label">Email</div>
+              <div class="contact-info-value">
+                <a href="mailto:gerci.usa@gmail.com">gerci.usa@gmail.com</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="contact-icon">🏠</div>
+            <div class="contact-info-text">
+              <div class="contact-info-label">Property</div>
+              <div class="contact-info-value">16 Vieira Dr, Peabody, MA 01960</div>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="contact-icon">💰</div>
+            <div class="contact-info-text">
+              <div class="contact-info-label">Price</div>
+              <div class="contact-info-value">$949,900</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="urgent-cta">
+          <div class="urgent-cta-text">
+            <strong>Need immediate assistance?</strong><br>
+            Call or text for instant response
+          </div>
+          <a href="tel:+18573123214" class="urgent-cta-button">Call Now: (857) 312-3214</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
     <script>
         // Smooth scrolling for anchor links

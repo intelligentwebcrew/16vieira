@@ -552,7 +552,7 @@ img {
 
 /* INDICADOR DE MAIS FOTOS */
 .pg-item:first-child::after {
-  content: '📷 Ver todas as fotos (39)';
+  content: '📷 View all (39) pics';
   position: absolute;
   bottom: 1rem;
   left: 1rem;
@@ -611,6 +611,105 @@ img {
   
   .pg-item:nth-child(n+13) {
     display: none;
+  }
+}
+
+/* ADICIONAR ESTE CSS NO FINAL DA SEÇÃO MODAL/LIGHTBOX */
+
+/* CAPTION E THUMBNAILS */
+.pg-caption {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.8);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  max-width: 80%;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.pg-thumbs {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  background: rgba(0,0,0,0.8);
+  padding: 0.5rem;
+  border-radius: 12px;
+  overflow-x: auto;
+  max-width: 90%;
+  backdrop-filter: blur(10px);
+}
+
+.pg-thumb {
+  width: 60px;
+  height: 45px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: none;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.pg-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pg-thumb:hover {
+  border-color: rgba(255,255,255,0.5);
+  transform: scale(1.05);
+}
+
+.pg-thumb.is-active {
+  border-color: #667eea;
+  transform: scale(1.1);
+}
+
+/* MOBILE ADJUSTMENTS */
+@media (max-width: 768px) {
+  .pg-thumbs {
+    bottom: 10px;
+    padding: 0.25rem;
+    gap: 0.25rem;
+  }
+  
+  .pg-thumb {
+    width: 50px;
+    height: 38px;
+  }
+  
+  .pg-caption {
+    bottom: 60px;
+    font-size: 0.8rem;
+    padding: 0.25rem 0.75rem;
+  }
+  
+  .pg-stage {
+    height: 60vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .pg-thumb {
+    width: 45px;
+    height: 34px;
+  }
+  
+  .pg-caption {
+    bottom: 55px;
+    max-width: 90%;
   }
 }
 

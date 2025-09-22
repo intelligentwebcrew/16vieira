@@ -566,6 +566,136 @@ a{color:inherit}
   .pg-item img, .pg-nav, .pg-close{ transition:none !important; }
 }
 
+/* ===== Additional Tour Options (grid) ===== */
+.tour-actions{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap:2rem;
+}
+
+/* Mobile: 1 coluna, sem overflow */
+@media (max-width: 768px){
+  .tour-actions{ grid-template-columns: 1fr; gap:1.25rem; }
+}
+
+/* ===== CTA Card ===== */
+.tour-cta{
+  position:relative;
+  border-radius:20px;
+  padding:clamp(1.25rem, 3.5vw, 2.5rem);
+  color:#fff;
+  text-align:center;
+  overflow:hidden;
+  background:linear-gradient(135deg, #48bb78 0%, #38f9d7 100%);
+  box-shadow:0 8px 30px rgba(0,0,0,.12);
+}
+.tour-cta__bg-bubble{
+  position:absolute; border-radius:50%; background:rgba(255,255,255,.14);
+}
+.tour-cta__bg-bubble--tr{ top:-24px; right:-24px; width:100px; height:100px; opacity:.6; }
+.tour-cta__bg-bubble--bl{ bottom:-30px; left:-30px; width:80px; height:80px; opacity:.35; }
+
+.tour-cta__content{ position:relative; z-index:1; }
+.tour-cta__icon{
+  width:clamp(56px, 9vw, 80px);
+  height:clamp(56px, 9vw, 80px);
+  margin:0 auto 1rem;
+  border-radius:20px;
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,.18);
+  display:flex; align-items:center; justify-content:center;
+  font-size:clamp(1.5rem, 5vw, 2rem);
+}
+.tour-cta__title{
+  font-size:clamp(1.125rem, 3.8vw, 1.5rem);
+  font-weight:700; margin-bottom:.75rem;
+}
+.tour-cta__text {
+  margin: 0 0 1.25rem 0;
+  opacity: .95;
+  line-height: 1.6;
+  font-size: clamp(.95rem, 3.2vw, 1rem);
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+.tour-cta__button{
+  display:inline-block;
+  width:100%;
+  padding:clamp(.85rem, 2.8vw, 1rem) clamp(1rem, 3.5vw, 2rem);
+  border-radius:12px;
+  text-decoration:none; font-weight:700; text-align:center;
+  color:#48bb78; background:#fff;
+  box-shadow:0 4px 20px rgba(0,0,0,.12);
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+@media (hover:hover){
+  .tour-cta__button:hover{ transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,0,0,.16); }
+}
+
+/* ===== Share Card ===== */
+.share-card{
+  background:#fff;
+  border-radius:20px;
+  padding:clamp(1.25rem, 3.5vw, 2.5rem);
+  text-align:center;
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
+  border:1px solid #e2e8f0;
+}
+.share-card__icon{
+  width:clamp(56px, 9vw, 80px);
+  height:clamp(56px, 9vw, 80px);
+  margin:0 auto 1rem;
+  border-radius:20px;
+  background:linear-gradient(135deg, #667eea, #764ba2);
+  color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  font-size:clamp(1.5rem, 5vw, 2rem);
+}
+.share-card__title{
+  font-size:clamp(1.125rem, 3.8vw, 1.5rem);
+  font-weight:700; margin-bottom:.75rem; color:#1a202c;
+}
+.share-card__text{
+  color:#4a5568; line-height:1.6; margin-bottom:1.25rem;
+  font-size:clamp(.95rem, 3.2vw, 1rem);
+  word-wrap:break-word; overflow-wrap:anywhere;
+}
+
+/* Ações */
+.share-card__actions{
+  display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap;
+}
+.share-btn{
+  border:none; cursor:pointer; font-weight:700; font-size:.95rem;
+  padding:.8rem 1rem; border-radius:10px; color:#fff;
+  flex:1 1 140px; /* cresce e quebra em mobile, evita overflow */
+  max-width:220px;
+  transition:transform .2s ease;
+}
+@media (hover:hover){
+  .share-btn:hover{ transform:translateY(-1px) scale(1.02); }
+}
+.share-btn--wa{ background:#25D366; }
+.share-btn--email{ background:#667eea; }
+.share-btn--copy{ background:#718096; }
+
+/* Mobile refinements */
+@media (max-width: 768px){
+  .tour-cta, .share-card{
+    text-align:left; /* opcional: left em mobile para leitura */
+  }
+  .tour-cta__button{
+    width:100%;
+  }
+  .share-card__actions{
+    justify-content:stretch;
+  }
+  .share-btn{
+    flex:1 1 100%;
+    max-width:none;
+  }
+}
+
 
 </style>
 
@@ -927,39 +1057,39 @@ a{color:inherit}
                 </div>
             </div>
             
-            <!-- Additional Tour Options -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
-                
+           <!-- Additional Tour Options -->
+                <div class="tour-actions">
                 <!-- Schedule In-Person Tour CTA -->
-                <div style="background: linear-gradient(135deg, #48bb78 0%, #38f9d7 100%); border-radius: 20px; padding: 2.5rem; color: white; text-align: center; position: relative; overflow: hidden;">
-                    <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); opacity: 0.5;"></div>
-                    <div style="position: absolute; bottom: -30px; left: -30px; width: 80px; height: 80px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); opacity: 0.3;"></div>
-                    
-                    <div style="position: relative; z-index: 2;">
-                        <div style="width: 80px; height: 80px; border-radius: 20px; background: rgba(255, 255, 255, 0.15); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; backdrop-filter: blur(10px); font-size: 2rem;">📅</div>
-                        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">Ready for an In-Person Tour?</h3>
-                        <p style="margin-bottom: 2rem; opacity: 0.95; line-height: 1.6;">
-                            Loved what you saw? Experience the home's true beauty and feel the space in person with a private showing.
-                        </p>
-                        <a href="#contact" style="background: white; color: #48bb78; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.1)'">
-                            Schedule Private Tour →
-                        </a>
+                <section class="tour-cta" aria-labelledby="tour-cta-title">
+                    <div class="tour-cta__bg-bubble tour-cta__bg-bubble--tr" aria-hidden="true"></div>
+                    <div class="tour-cta__bg-bubble tour-cta__bg-bubble--bl" aria-hidden="true"></div>
+
+                    <div class="tour-cta__content">
+                    <div class="tour-cta__icon">📅</div>
+                    <h3 id="tour-cta-title" class="tour-cta__title">Ready for an In-Person Tour?</h3>
+                    <p class="tour-cta__text">
+                        Loved what you saw? Experience the home's true beauty and feel the space in person with a private showing.
+                    </p>
+                    <a href="#contact" class="tour-cta__button">Schedule Private Tour →</a>
                     </div>
+                </section>
                 </div>
                 
                 <!-- Share Tour -->
-                <div style="background: white; border-radius: 20px; padding: 2.5rem; text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,0.08); border: 1px solid #e2e8f0;">
-                    <div style="width: 80px; height: 80px; border-radius: 20px; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 2rem; color: white;">📱</div>
-                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: #1a202c;">Share This Tour</h3>
-                    <p style="margin-bottom: 2rem; color: #4a5568; line-height: 1.6;">
-                        Found your dream home? Share this virtual tour with family and friends to get their thoughts.
+                <section class="share-card" aria-labelledby="share-title">
+                    <div class="share-card__icon">📱</div>
+                    <h3 id="share-title" class="share-card__title">Share This Tour</h3>
+                    <p class="share-card__text">
+                    Found your dream home? Share this virtual tour with family and friends to get their thoughts.
                     </p>
-                    
-                    <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-                        <button onclick="shareVirtualTour('whatsapp')" style="background: #25D366; color: white; border: none; padding: 0.75rem 1.25rem; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.9rem; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">WhatsApp</button>
-                        <button onclick="shareVirtualTour('email')" style="background: #667eea; color: white; border: none; padding: 0.75rem 1.25rem; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.9rem; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Email</button>
-                        <button onclick="shareVirtualTour('copy')" style="background: #718096; color: white; border: none; padding: 0.75rem 1.25rem; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.9rem; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Copy Link</button>
+
+                    <div class="share-card__actions">
+                    <button type="button" class="share-btn share-btn--wa"     onclick="shareVirtualTour('whatsapp')">WhatsApp</button>
+                    <button type="button" class="share-btn share-btn--email"  onclick="shareVirtualTour('email')">Email</button>
+                    <button type="button" class="share-btn share-btn--copy"   onclick="shareVirtualTour('copy')">Copy Link</button>
                     </div>
+                </section>
+                </div>
                 </div>
             </div>
         </div>

@@ -382,6 +382,22 @@ img {
   width: 100%;
 }
 
+/* === HERO - alinhar à esquerda no desktop === */
+@media (min-width: 1024px) {
+  /* já tem grid left pro bloco, aqui forçamos os detalhes */
+  .hero-details {
+    justify-content: flex-start;   /* sai do center */
+  }
+  .hero-detail {
+    text-align: left;               /* números/labels à esquerda */
+    /* opcional: deixa coluna bem "esquerda" */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
 /* BOTÕES - MOBILE FIRST */
 .btn {
   width: 100%;

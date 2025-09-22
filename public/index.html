@@ -505,15 +505,20 @@ a{color:inherit}
             margin-bottom: 32px;
         }
 
-        .agent-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
-            margin: 0 auto 20px;
-        }
+       .agent-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+        margin: 0 auto 20px;
+        transition: transform 0.3s ease;
+       }
+
+       .agent-avatar:hover {
+        transform: scale(1.05);
+       }
 
         .agent-name {
             font-size: 1.75rem;
@@ -1856,9 +1861,9 @@ a{color:inherit}
                 <!-- Card do agente -->
                 <div class="agent-card">
                     <div class="agent-profile">
-                        <img src="/images/gercilaine-realtor.webp" alt="Realtor Gercilaine" width="200" height="200"> 
-                             alt="Gercilaine DeSouza" 
-                             class="agent-avatar">
+                         <img src="/images/gercilaine-realtor.webp" 
+                          alt="Gercilaine DeSouza" 
+                          class="agent-avatar">
                         <div class="agent-name">Gercilaine DeSouza</div>
                         <div class="agent-role">Licensed Real Estate Professional</div>
                         <div class="agent-company">Allison James Estates & Homes of MA, LLC</div>
@@ -2741,7 +2746,9 @@ window.addEventListener('load', function() {
             "availability": "https://schema.org/ForSale"
         }
     }
-    // Scroll to Top functionality
+    </script>
+    <script>
+// Scroll to Top functionality
 const scrollToTopBtn = document.getElementById('scrollToTop');
 
 // Show/hide button based on scroll position
@@ -2765,7 +2772,7 @@ scrollToTopBtn.addEventListener('click', () => {
         trackEvent('Navigation', 'Scroll to Top', 'Button Click');
     }
 });
-    </script>
+</script>
 
 <!-- Scroll to Top Button -->
 <button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top" title="Back to top">

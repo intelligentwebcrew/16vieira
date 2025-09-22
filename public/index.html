@@ -2274,96 +2274,6 @@ img {
             });
         });
 
-
-// Updated form submission (NO API key in frontend)
-document.getElementById('contactForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const submitBtn = this.querySelector('.submit-button');
-    const btnText = submitBtn.querySelector('.btn-text') || submitBtn;
-    const btnLoading = submitBtn.querySelector('.btn-loading');
-    const successMsg = document.getElementById('form-success');
-    const errorMsg = document.getElementById('form-error');
-    
-    // Show loading state
-    if (btnLoading) {
-        btnText.style.display = 'none';
-        btnLoading.style.display = 'inline';
-    } else {
-        btnText.textContent = 'Sending...';
-    }
-    submitBtn.disabled = true;
-    submitBtn.classList.add('loading');
-    
-    // Get form data
-    const formData = new FormData(this);
-    const data = Object.fromEntries(formData);
-    
-    try {
-        // Send to your secure backend endpoint
-        const response = await fetch('/send-email.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-
-        if (response.ok) {
-            // Reset button state
-            if (btnLoading) {
-                btnText.style.display = 'inline';
-                btnLoading.style.display = 'none';
-            } else {
-                btnText.textContent = 'Send Message & Schedule Tour';
-            }
-            submitBtn.disabled = false;
-            submitBtn.classList.remove('loading');
-            
-            // Show success message
-            successMsg.style.display = 'block';
-            errorMsg.style.display = 'none';
-            
-            // Reset form
-            this.reset();
-            
-            // Track success
-            if (typeof trackEvent !== 'undefined') {
-                trackEvent('Lead', 'Form Submission Success', 'Brevo Email');
-            }
-            
-            // Hide success message after 8 seconds
-            setTimeout(() => {
-                successMsg.style.display = 'none';
-            }, 8000);
-            
-        } else {
-            throw new Error('Failed to send email');
-        }
-        
-    } catch (error) {
-        console.error('Email sending error:', error);
-        
-        // Show error state
-        if (btnLoading) {
-            btnText.style.display = 'inline';
-            btnLoading.style.display = 'none';
-        } else {
-            btnText.textContent = 'Send Message & Schedule Tour';
-        }
-        submitBtn.disabled = false;
-        submitBtn.classList.remove('loading');
-        
-        errorMsg.style.display = 'block';
-        successMsg.style.display = 'none';
-        
-        // Track error
-        if (typeof trackEvent !== 'undefined') {
-                  trackEvent('Lead', 'Form Submission Error', 'Backend Failed');
-              }
-          }
-      });
-
         // Enhanced scroll animations
         const observerOptions = {
             threshold: 0.1,
@@ -3060,34 +2970,34 @@ document.getElementById('contactForm').addEventListener('submit', async function
     </script>
 
 <!-- Scroll to Top Button -->
-<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top" title="Back to top">
-</button>
+<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top" title="Back to top"></button>
 
  <script>
-// Scroll to Top functionality
-const scrollToTopBtn = document.getElementById('scrollToTop');
+(function(){
+  const scrollToTopBtn = document.getElementById('scrollToTop');
+  if (!scrollToTopBtn) return;
 
-// Show/hide button based on scroll position
-window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 500) {
-        scrollToTopBtn.classList.add('show');
+  function toggleBtn(){
+    const y = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+    if (y > 400) {
+      scrollToTopBtn.classList.add('show');
     } else {
-        scrollToTopBtn.classList.remove('show');
+      scrollToTopBtn.classList.remove('show');
     }
-});
+  }
 
-// Smooth scroll to top
-scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-    
-    // Track analytics
+  // estado inicial e durante o scroll
+  toggleBtn();
+  window.addEventListener('scroll', toggleBtn, { passive: true });
+
+  // clique
+  scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     if (typeof trackEvent !== 'undefined') {
-        trackEvent('Navigation', 'Scroll to Top', 'Button Click');
+      trackEvent('Navigation', 'Scroll to Top', 'Button Click');
     }
-});
+  });
+})();
 </script>
 
 </body>

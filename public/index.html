@@ -1572,13 +1572,7 @@ img {
     <!-- Grade da Galeria -->
     <div class="pg-grid" id="pgGrid" aria-live="polite">
       <!-- 1–6: src direto (2 eager, 4 lazy) -->
-      <figure class="pg-item" data-index="4">
-        <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m304766765rd-w1280_h960.webp" alt="Beautiful front view with landscaped yard" loading="lazy">
-      </figure>
-      <figure class="pg-item" data-index="0">
-        <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m131134841rd-w1280_h960.webp" alt="Spacious living room" loading="eager">
-      </figure>
-      <figure class="pg-item" data-index="1">
+       <figure class="pg-item" data-index="1">
         <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m169583219rd-w1280_h960.webp" alt="Spacious backyard deck with seating" loading="eager">
       </figure>
       <figure class="pg-item" data-index="2">
@@ -1587,8 +1581,14 @@ img {
       <figure class="pg-item" data-index="3">
         <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m229789136rd-w1280_h960.webp" alt="Private heated pool with spacious deck" loading="lazy">
       </figure>
+      <figure class="pg-item" data-index="4">
+        <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m304766765rd-w1280_h960.webp" alt="Beautiful front view with landscaped yard" loading="lazy">
+      </figure>
       <figure class="pg-item" data-index="5">
         <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m419067109rd-w1280_h960.webp" alt="Spacious family room with home theater, full bathroom, and entertainment area." loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="0">
+        <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m131134841rd-w1280_h960.webp" alt="Spacious living room" loading="eager">
       </figure>
 
       <!-- 7–39: lazy por data-src -->
@@ -2230,12 +2230,12 @@ img {
                         </button>
 
                         <div id="form-success" class="form-message success">
-                            <strong>Thank you!</strong> Your message has been sent successfully. We'll contact you within 24 hours to schedule your private tour.
-                        </div>
+                          <strong>Message sent successfully!</strong> Your inquiry has been sent directly to the realtor. You will receive a response within 24 hours to schedule your private tour.
+                      </div>
 
-                        <div id="form-error" class="form-message error">
-                            <strong>Oops!</strong> There was an issue sending your message. Please try calling us directly at (857) 312-3214.
-                        </div>
+                      <div id="form-error" class="form-message error">
+                          <strong>Sending failed!</strong> There was a problem sending your message. Please try calling directly at (857) 312-3214 or email gerci.usa@gmail.com.
+                      </div>
                     </form>
                 </div>
 
@@ -2302,12 +2302,6 @@ img {
         </div>
     </section>
 
-    <!-- Modal for image viewing -->
-    <div id="imageModal" class="modal">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <img class="modal-content" id="modalImage">
-    </div>
-
     <script>
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -2323,115 +2317,165 @@ img {
             });
         });
 
-        // Enhanced contact form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitBtn = this.querySelector('.submit-btn');
-            const btnText = submitBtn.querySelector('.btn-text');
-            const btnLoading = submitBtn.querySelector('.btn-loading');
-            const successMsg = document.getElementById('form-success');
-            const errorMsg = document.getElementById('form-error');
-            
-            // Show loading state
-            btnText.style.display = 'none';
-            btnLoading.style.display = 'inline';
-            submitBtn.disabled = true;
-            submitBtn.classList.add('loading');
-            
-            // Get form data
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
-            
-            // Create comprehensive email content
-            const subject = encodeURIComponent(`🏠 URGENT: Property Inquiry - 16 Vieira Dr, Peabody, MA - ${data.firstName} ${data.lastName}`);
-            const emailBody = `
-            🏠 PROPERTY INQUIRY - 16 VIEIRA DR, PEABODY, MA
+        // Brevo Configuration
+const BREVO_CONFIG = {
+    apiKey: 'REDACTED', // Replace with your actual Brevo API key
+    apiUrl: 'https://api.brevo.com/v3/smtp/email'
+};
 
-            CONTACT INFORMATION:
-            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            👤 Name: ${data.firstName} ${data.lastName}
-            📧 Email: ${data.email}
-            📱 Phone: ${data.phone}
-
-            BUYER PROFILE:
-            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            💰 Financing Status: ${data.financing || 'Not specified'}
-            ⏰ Purchase Timeframe: ${data.timeframe || 'Not specified'}
-            📅 Preferred Tour Time: ${data.tourPreference || 'Not specified'}
-
-            BUYER MESSAGE:
-            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            ${data.message || 'No additional message provided'}
-
-            PROPERTY DETAILS:
-            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            🏠 Address: 16 Vieira Dr, Peabody, MA 01960
-            💵 Price: $949,900
-            🏷️ MLS #: 73427376
-            🛏️ Bedrooms: 3
-            🛁 Bathrooms: 3
-            📐 Square Feet: 2,330
-            🏗️ Year Built: 2018
-
-            NEXT STEPS:
-            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            ⚡ PRIORITY: Respond within 24 hours
-            📞 Contact buyer at: ${data.phone}
-            📧 Follow up via email: ${data.email}
-            🏠 Schedule property tour ASAP
-
-            This inquiry was submitted through: https://16vieira.com
-            Submission time: ${new Date().toLocaleString()}
-
-            Please prioritize this lead and respond promptly.
-            `;
-            
-            const ccEmail = 'luizlz@gmail.com';
-            const agentEmail  = 'infowebcrew@gmail.com';
-
-            //const agentEmail = 'gerci.usa@gmail.com';
-            
-            // Create mailto link
-            const mailtoLink = `mailto:${agentEmail}?cc=${ccEmail}&subject=${subject}&body=${encodeURIComponent(emailBody)}`;
-            
-            // Simulate form processing
-            setTimeout(() => {
-                try {
-                    // Open email client
-                    window.location.href = mailtoLink;
-                    
-                    // Reset button state
-                    btnText.style.display = 'inline';
-                    btnLoading.style.display = 'none';
-                    submitBtn.disabled = false;
-                    submitBtn.classList.remove('loading');
-                    
-                    // Show success message
-                    successMsg.style.display = 'block';
-                    errorMsg.style.display = 'none';
-                    
-                    // Reset form
-                    this.reset();
-                    
-                    // Hide success message after 10 seconds
-                    setTimeout(() => {
-                        successMsg.style.display = 'none';
-                    }, 10000);
-                    
-                } catch (error) {
-                    console.error('Form submission error:', error);
-                    
-                    // Show error state
-                    btnText.style.display = 'inline';
-                    btnLoading.style.display = 'none';
-                    submitBtn.disabled = false;
-                    submitBtn.classList.remove('loading');
-                    
-                    errorMsg.style.display = 'block';
-                    successMsg.style.display = 'none';
+// Enhanced contact form submission with Brevo
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const submitBtn = this.querySelector('.submit-button');
+    const btnText = submitBtn.querySelector('.btn-text') || submitBtn;
+    const btnLoading = submitBtn.querySelector('.btn-loading');
+    const successMsg = document.getElementById('form-success');
+    const errorMsg = document.getElementById('form-error');
+    
+    // Show loading state
+    if (btnLoading) {
+        btnText.style.display = 'none';
+        btnLoading.style.display = 'inline';
+    } else {
+        btnText.textContent = 'Sending...';
+    }
+    submitBtn.disabled = true;
+    submitBtn.classList.add('loading');
+    
+    // Get form data
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+    
+    try {
+        // Send via Brevo API
+        const response = await fetch(BREVO_CONFIG.apiUrl, {
+            method: 'POST',
+            headers: {
+                'accept': 'application/json',
+                'api-key': BREVO_CONFIG.apiKey,
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                sender: {
+                    name: `${data.firstName} ${data.lastName}`,
+                    email: data.email
+                },
+                to: [
+                    {
+                        email: 'gerci.usa@gmail.com',
+                        name: 'Gercilaine DeSouza'
+                    },
+                    {
+                        email: 'luizlz@gmail.com',
+                        name: 'Backup Contact'
+                    }
+                ],
+                subject: `🏠 URGENT: Property Inquiry - 16 Vieira Dr - ${data.firstName} ${data.lastName}`,
+                htmlContent: `
+                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                        <div style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 30px; text-align: center; color: white;">
+                            <h1 style="margin: 0; font-size: 24px;">🏠 New Property Inquiry</h1>
+                            <p style="margin: 10px 0 0 0; opacity: 0.9;">16 Vieira Dr, Peabody, MA</p>
+                        </div>
+                        
+                        <div style="padding: 30px; background: white;">
+                            <h2 style="color: #2d3748; margin-bottom: 20px;">Contact Information</h2>
+                            
+                            <div style="background: #f7fafc; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                                <p><strong>Name:</strong> ${data.firstName} ${data.lastName}</p>
+                                <p><strong>Email:</strong> <a href="mailto:${data.email}">${data.email}</a></p>
+                                <p><strong>Phone:</strong> <a href="tel:${data.phone}">${data.phone}</a></p>
+                                <p><strong>Financing Status:</strong> ${data.financing || 'Not specified'}</p>
+                            </div>
+                            
+                            ${data.message ? `
+                            <h3 style="color: #2d3748; margin-bottom: 10px;">Client Message:</h3>
+                            <div style="background: #edf2f7; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                                <p style="margin: 0;">${data.message}</p>
+                            </div>
+                            ` : ''}
+                            
+                            <div style="margin-top: 30px; padding: 20px; background: #f0fff4; border-radius: 10px; border: 2px solid #48bb78;">
+                                <h3 style="color: #22543d; margin-bottom: 10px;">Property Details</h3>
+                                <p style="margin: 5px 0;"><strong>Address:</strong> 16 Vieira Dr, Peabody, MA 01960</p>
+                                <p style="margin: 5px 0;"><strong>Price:</strong> $949,900</p>
+                                <p style="margin: 5px 0;"><strong>MLS:</strong> 73427376</p>
+                                <p style="margin: 5px 0;"><strong>Features:</strong> 3 bedrooms, 3 bathrooms, 2,330 sq ft</p>
+                            </div>
+                            
+                            <div style="margin-top: 30px; text-align: center;">
+                                <a href="tel:${data.phone}" style="background: #48bb78; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block; margin-right: 10px;">📞 Call Now</a>
+                                <a href="mailto:${data.email}" style="background: #667eea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">📧 Reply Email</a>
+                            </div>
+                        </div>
+                        
+                        <div style="background: #2d3748; color: white; padding: 20px; text-align: center;">
+                            <p style="margin: 0; font-size: 14px;">Sent through 16vieira.com on ${new Date().toLocaleString()}</p>
+                            <p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.8;">⚡ Respond within 24 hours for maximum conversion</p>
+                        </div>
+                    </div>
+                `,
+                replyTo: {
+                    email: data.email,
+                    name: `${data.firstName} ${data.lastName}`
                 }
-            }, 2000);
+            })
+        });
+
+        if (response.ok) {
+            // Reset button state
+            if (btnLoading) {
+                btnText.style.display = 'inline';
+                btnLoading.style.display = 'none';
+            } else {
+                btnText.textContent = 'Send Message & Schedule Tour';
+            }
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('loading');
+            
+            // Show success message
+            successMsg.style.display = 'block';
+            errorMsg.style.display = 'none';
+            
+            // Reset form
+            this.reset();
+            
+            // Track success
+            if (typeof trackEvent !== 'undefined') {
+                trackEvent('Lead', 'Form Submission Success', 'Brevo Email');
+            }
+            
+            // Hide success message after 8 seconds
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 8000);
+            
+        } else {
+            throw new Error('Failed to send email');
+        }
+        
+    } catch (error) {
+        console.error('Brevo email error:', error);
+        
+        // Show error state
+        if (btnLoading) {
+            btnText.style.display = 'inline';
+            btnLoading.style.display = 'none';
+        } else {
+            btnText.textContent = 'Send Message & Schedule Tour';
+        }
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+        
+        errorMsg.style.display = 'block';
+        successMsg.style.display = 'none';
+        
+        // Track error
+        if (typeof trackEvent !== 'undefined') {
+            trackEvent('Lead', 'Form Submission Error', 'Brevo API Failed');
+                }
+            }
         });
 
         // Enhanced scroll animations

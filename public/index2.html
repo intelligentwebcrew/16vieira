@@ -462,6 +462,111 @@ a{color:inherit}
   .gallery-grid{ grid-template-columns:repeat(4, minmax(260px, 1fr)) }
   .hero-content{ gap:2.5rem }
 }
+
+/* ==== HOTFIX MOBILE (coloque DEPOIS de todo o resto) ==== */
+@media (max-width: 768px){
+  .section.section-dark .container .property-details-enhanced .specs-container{
+    display: grid !important;
+    grid-template-columns: 1fr !important;   /* força 1 coluna */
+    grid-auto-flow: row !important;
+    gap: clamp(.75rem, 2.2vw, 1.25rem) !important;
+  }
+
+  /* evita qualquer largura fixa herdada que cause 2 colunas */
+  .section.section-dark .spec-card{
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+  }
+}
+
+/* ===== Property Gallery ===== */
+.pg-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:1rem;
+}
+.pg-item{
+  position:relative; overflow:hidden; border-radius:16px; background:#000;
+  box-shadow:0 8px 26px rgba(0,0,0,.12); cursor:pointer;
+}
+.pg-item img{
+  width:100%; height:clamp(220px,28vw,320px); object-fit:cover; display:block;
+  transition:transform .35s ease, opacity .3s ease;
+}
+@media (hover:hover){
+  .pg-item:hover img{ transform:scale(1.04); opacity:.96; }
+}
+
+/* MOBILE: mostrar apenas 1 cartão na grade */
+@media (max-width: 640px){
+  .pg-grid .pg-item{ display:none; }
+  .pg-grid .pg-item:first-child{ display:block; }
+}
+
+/* ===== Modal/Lightbox ===== */
+.pg-modal{
+  position:fixed; inset:0; background:rgba(10,12,17,.95);
+  display:none; z-index:1000;
+}
+.pg-modal[aria-hidden="false"]{ display:block; }
+.pg-close{
+  position:absolute; top:16px; right:16px; z-index:2;
+  width:44px; height:44px; border-radius:50%; border:none; cursor:pointer;
+  font-size:28px; line-height:1; color:#fff; background:rgba(255,255,255,.18);
+  backdrop-filter:blur(6px);
+}
+.pg-stage{
+  position:absolute; top:56px; left:50%; transform:translateX(-50%);
+  width:min(1200px,92vw); height:min(70vh,70dvh);
+  display:flex; align-items:center; justify-content:center;
+}
+.pg-stage img{
+  max-width:100%; max-height:100%; border-radius:12px; box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+.pg-nav{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:48px; height:64px; border:none; cursor:pointer; color:#fff; font-size:36px; line-height:0;
+  background:rgba(255,255,255,.18); backdrop-filter:blur(6px); border-radius:12px;
+}
+.pg-prev{ left:8px; } .pg-next{ right:8px; }
+@media (max-width:640px){
+  .pg-nav{ width:40px; height:56px; font-size:30px; }
+}
+
+/* Caption */
+.pg-caption{
+  position:absolute; left:50%; transform:translateX(-50%);
+  bottom:120px; width:min(1200px,92vw);
+  color:#e2e8f0; text-align:center; font-size:clamp(.9rem,2.4vw,1rem);
+}
+
+/* Thumbnails */
+.pg-thumbs{
+  position:absolute; left:50%; transform:translateX(-50%);
+  bottom:20px; width:min(1200px,92vw);
+  display:flex; gap:.5rem; overflow-x:auto; padding:.5rem;
+  background:rgba(255,255,255,.06); border-radius:12px; backdrop-filter:blur(6px);
+  scrollbar-width:thin;
+}
+.pg-thumb{
+  flex:0 0 auto; width:80px; height:60px; border-radius:8px; overflow:hidden;
+  border:2px solid transparent; cursor:pointer; opacity:.8;
+}
+.pg-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+.pg-thumb.is-active{ border-color:#667eea; opacity:1; }
+
+/* A11y: foco visível */
+.pg-thumb:focus-visible, .pg-nav:focus-visible, .pg-close:focus-visible{
+  outline:3px solid #667eea; outline-offset:2px;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .pg-item img, .pg-nav, .pg-close{ transition:none !important; }
+}
+
+
 </style>
 
 </head>
@@ -578,183 +683,156 @@ a{color:inherit}
         </div>
     </section>
 
-    <section class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Property Gallery</h2>
-                <p class="section-subtitle">Take a visual tour of this beautiful home and its stunning features</p>
-            </div>
-            
-            <!-- Gallery Controls -->
-            <div style="text-align: center; margin-bottom: 2rem;">
-                <div style="display: inline-flex; background: white; border-radius: 12px; padding: 0.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid #e2e8f0;">
-                    <button id="showLess" style="padding: 0.75rem 1.5rem; background: #f7fafc; color: #4a5568; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: none;" onclick="showLessImages()">Show Less</button>
-                    <button id="loadMore" style="padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;" onclick="loadMoreImages()">Load More Photos</button>
-                </div>
-                <div id="imageCounter" style="margin-top: 1rem; color: #4a5568; font-size: 0.9rem;">Showing 12 of 39 photos</div>
-            </div>
-            
-            <div class="gallery-grid" id="galleryGrid">
-  <!-- Initial 12 Images (Priority Load) -->
-  <div class="gallery-item visible" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m131134841rd-w1280_h960.webp')">
-    <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m131134841rd-w1280_h960.webp" alt="Beautiful exterior view of modern home" loading="eager">
+    <section class="section" id="property-gallery" aria-labelledby="gallery-title">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title" id="gallery-title">Property Gallery</h2>
+      <p class="section-subtitle">Take a visual tour of this beautiful home and its stunning features</p>
+    </div>
+
+    <!-- Grade da Galeria -->
+    <div class="pg-grid" id="pgGrid" aria-live="polite">
+      <!-- 1–6: src direto (2 eager, 4 lazy) -->
+      <figure class="pg-item" data-index="0">
+        <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m131134841rd-w1280_h960.webp" alt="Beautiful exterior view of modern home" loading="eager">
+      </figure>
+      <figure class="pg-item" data-index="1">
+        <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m169583219rd-w1280_h960.webp" alt="Modern kitchen with granite countertops" loading="eager">
+      </figure>
+      <figure class="pg-item" data-index="2">
+        <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m192399468rd-w1280_h960.webp" alt="Spacious living room with modern finishes" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="3">
+        <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m229789136rd-w1280_h960.webp" alt="Luxury master bedroom" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="4">
+        <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m304766765rd-w1280_h960.webp" alt="Modern bathroom with luxury fixtures" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="5">
+        <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m419067109rd-w1280_h960.webp" alt="Beautiful backyard with heated pool" loading="lazy">
+      </figure>
+
+      <!-- 7–39: lazy por data-src -->
+      <figure class="pg-item" data-index="6">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m488636304rd-w1280_h960.webp" alt="Dining area with elegant finishes" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="7">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m831176738rd-w1280_h960.webp" alt="Secondary bedroom with natural light" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="8">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1032331297rd-w1280_h960.webp" alt="Family room with open layout" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="9">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1085440178rd-w1280_h960.webp" alt="Third bedroom with ample space" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="10">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1276844953rd-w1280_h960.webp" alt="Garage and storage areas" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="11">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1504776040rd-w1280_h960.webp" alt="Pool area and outdoor entertainment space" loading="lazy">
+      </figure>
+
+      <!-- 13+ com título genérico -->
+      <figure class="pg-item" data-index="12">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1571943510rd-w1280_h960.webp" alt="Property detail view 13" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="13">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1815141461rd-w1280_h960.webp" alt="Property detail view 14" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="14">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1867363705rd-w1280_h960.webp" alt="Property detail view 15" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="15">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1875390969rd-w1280_h960.webp" alt="Property detail view 16" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="16">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1941059446rd-w1280_h960.webp" alt="Property detail view 17" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="17">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1979935556rd-w1280_h960.webp" alt="Property detail view 18" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="18">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m2073694413rd-w1280_h960.webp" alt="Property detail view 19" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="19">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m2154312625rd-w1280_h960.webp" alt="Property detail view 20" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="20">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m2161128554rd-w1280_h960.webp" alt="Property detail view 21" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="21">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m2224856041rd-w1280_h960.webp" alt="Property detail view 22" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="22">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m2396723219rd-w1280_h960.webp" alt="Property detail view 23" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="23">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m2577367925rd-w1280_h960.webp" alt="Property detail view 24" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="24">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3091921502rd-w1280_h960.webp" alt="Property detail view 25" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="25">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3127686592rd-w2048_h1536.jpg" alt="Property detail view 26" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="26">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3290714963rd-w1280_h960.webp" alt="Property detail view 27" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="27">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3350686971rd-w1280_h960.webp" alt="Property detail view 28" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="28">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3431332721rd-w1280_h960.webp" alt="Property detail view 29" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="29">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3721591805rd-w1280_h960.webp" alt="Property detail view 30" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="30">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3733435087rd-w1280_h960.webp" alt="Property detail view 31" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="31">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3886636214rd-w1280_h960.webp" alt="Property detail view 32" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="32">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3900882121rd-w1280_h960.webp" alt="Property detail view 33" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="33">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m4025491313rd-w1280_h960.webp" alt="Property detail view 34" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="34">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m4050398225rd-w1280_h960.webp" alt="Property detail view 35" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="35">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m4083815423rd-w1280_h960.webp" alt="Property detail view 36" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="36">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m4084885764rd-w1280_h960.webp" alt="Property detail view 37" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="37">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m4172302836rd-w1280_h960.webp" alt="Property detail view 38" loading="lazy">
+      </figure>
+      <figure class="pg-item" data-index="38">
+        <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m4237699397rd-w1280_h960.webp" alt="Property detail view 39" loading="lazy">
+      </figure>
+    </div>
   </div>
 
-  <div class="gallery-item visible" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m169583219rd-w1280_h960.webp')">
-    <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m169583219rd-w1280_h960.webp" alt="Modern kitchen with granite countertops" loading="eager">
-  </div>
+  <!-- Modal / Lightbox -->
+  <div class="pg-modal" id="pgModal" role="dialog" aria-modal="true" aria-labelledby="pgModalTitle" aria-hidden="true">
+    <button class="pg-close" id="pgClose" aria-label="Close gallery">×</button>
 
-  <div class="gallery-item visible" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m192399468rd-w1280_h960.webp')">
-    <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m192399468rd-w1280_h960.webp" alt="Spacious living room with modern finishes" loading="eager">
-  </div>
+    <div class="pg-stage" id="pgStage">
+      <button class="pg-nav pg-prev" id="pgPrev" aria-label="Previous photo">‹</button>
+      <img id="pgMain" alt="" />
+      <button class="pg-nav pg-next" id="pgNext" aria-label="Next photo">›</button>
+    </div>
 
-  <div class="gallery-item visible" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m229789136rd-w1280_h960.webp')">
-    <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m229789136rd-w1280_h960.webp" alt="Luxury master bedroom" loading="eager">
-  </div>
+    <div class="pg-caption" id="pgModalTitle"></div>
 
-  <div class="gallery-item visible" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m304766765rd-w1280_h960.webp')">
-    <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m304766765rd-w1280_h960.webp" alt="Modern bathroom with luxury fixtures" loading="eager">
+    <div class="pg-thumbs" id="pgThumbs" aria-label="Thumbnails"></div>
   </div>
-
-  <div class="gallery-item visible" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m419067109rd-w1280_h960.webp')">
-    <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m419067109rd-w1280_h960.webp" alt="Beautiful backyard with heated pool" loading="eager">
-  </div>
-
-  <div class="gallery-item visible" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m488636304rd-w1280_h960.webp')">
-    <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m488636304rd-w1280_h960.webp" alt="Dining area with elegant finishes" loading="eager">
-  </div>
-
-  <div class="gallery-item visible" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m831176738rd-w1280_h960.webp')">
-    <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m831176738rd-w1280_h960.webp" alt="Secondary bedroom with natural light" loading="eager">
-  </div>
-
-  <div class="gallery-item visible" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1032331297rd-w1280_h960.webp')">
-    <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1032331297rd-w1280_h960.webp" alt="Family room with open layout" loading="eager">
-  </div>
-
-  <div class="gallery-item visible" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1085440178rd-w1280_h960.webp')">
-    <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1085440178rd-w1280_h960.webp" alt="Third bedroom with ample space" loading="eager">
-  </div>
-
-  <div class="gallery-item visible" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1276844953rd-w1280_h960.webp')">
-    <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1276844953rd-w1280_h960.webp" alt="Garage and storage areas" loading="eager">
-  </div>
-
-  <div class="gallery-item visible" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1504776040rd-w1280_h960.webp')">
-    <img src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1504776040rd-w1280_h960.webp" alt="Pool area and outdoor entertainment space" loading="eager">
-  </div>
-
-  <!-- Lazy Load Images (Hidden Initially) -->
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1571943510rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1571943510rd-w1280_h960.webp" alt="Property detail view 13" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1815141461rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1815141461rd-w1280_h960.webp" alt="Property detail view 14" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1867363705rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1867363705rd-w1280_h960.webp" alt="Property detail view 15" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1875390969rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1875390969rd-w1280_h960.webp" alt="Property detail view 16" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1941059446rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1941059446rd-w1280_h960.webp" alt="Property detail view 17" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1979935556rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m1979935556rd-w1280_h960.webp" alt="Property detail view 18" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m2073694413rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m2073694413rd-w1280_h960.webp" alt="Property detail view 19" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m2154312625rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m2154312625rd-w1280_h960.webp" alt="Property detail view 20" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m2161128554rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m2161128554rd-w1280_h960.webp" alt="Property detail view 21" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m2224856041rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m2224856041rd-w1280_h960.webp" alt="Property detail view 22" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m2396723219rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m2396723219rd-w1280_h960.webp" alt="Property detail view 23" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m2577367925rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m2577367925rd-w1280_h960.webp" alt="Property detail view 24" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3091921502rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3091921502rd-w1280_h960.webp" alt="Property detail view 25" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3127686592rd-w2048_h1536.jpg')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3127686592rd-w2048_h1536.jpg" alt="Property detail view 26" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3290714963rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3290714963rd-w1280_h960.webp" alt="Property detail view 27" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3350686971rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3350686971rd-w1280_h960.webp" alt="Property detail view 28" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3431332721rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3431332721rd-w1280_h960.webp" alt="Property detail view 29" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3721591805rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3721591805rd-w1280_h960.webp" alt="Property detail view 30" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3733435087rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3733435087rd-w1280_h960.webp" alt="Property detail view 31" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3886636214rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3886636214rd-w1280_h960.webp" alt="Property detail view 32" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3900882121rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m3900882121rd-w1280_h960.webp" alt="Property detail view 33" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m4025491313rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m4025491313rd-w1280_h960.webp" alt="Property detail view 34" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m4050398225rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m4050398225rd-w1280_h960.webp" alt="Property detail view 35" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m4083815423rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m4083815423rd-w1280_h960.webp" alt="Property detail view 36" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m4084885764rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m4084885764rd-w1280_h960.webp" alt="Property detail view 37" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m4172302836rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m4172302836rd-w1280_h960.webp" alt="Property detail view 38" loading="lazy">
-  </div>
-
-  <div class="gallery-item hidden" onclick="openModal('/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m4237699397rd-w1280_h960.webp')">
-    <img data-src="/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m4237699397rd-w1280_h960.webp" alt="Property detail view 39" loading="lazy">
-  </div>
-</div>
-
 </section>
+
 
  <!-- Virtual Tour Section -->
 <section class="section" style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);">
@@ -1402,51 +1480,6 @@ a{color:inherit}
             }, 2000);
         });
 
-        // Modal functions for image gallery
-        function openModal(src) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
-            
-            modal.style.display = 'block';
-            modalImg.src = src;
-            document.body.style.overflow = 'hidden';
-            
-            // Add zoom animation
-            modalImg.style.transform = 'translate(-50%, -50%) scale(0.8)';
-            modalImg.style.transition = 'transform 0.3s ease';
-            
-            requestAnimationFrame(() => {
-                modalImg.style.transform = 'translate(-50%, -50%) scale(1)';
-            });
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
-            
-            // Add closing animation
-            modalImg.style.transform = 'translate(-50%, -50%) scale(0.8)';
-            
-            setTimeout(() => {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }, 200);
-        }
-
-        // Close modal on outside click
-        document.getElementById('imageModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
-
-        // Close modal with ESC key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeModal();
-            }
-        });
-
         // Enhanced scroll animations
         const observerOptions = {
             threshold: 0.1,
@@ -1588,30 +1621,6 @@ a{color:inherit}
             });
         }
 
-        // Touch gesture support for mobile gallery
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        document.addEventListener('touchstart', function(e) {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        document.addEventListener('touchend', function(e) {
-            touchEndX = e.changedTouches[0].screenX;
-            handleGesture();
-        });
-
-        function handleGesture() {
-            if (touchEndX < touchStartX - 50) {
-                // Swipe left - could implement next image
-                console.log('Swiped left');
-            }
-            if (touchEndX > touchStartX + 50) {
-                // Swipe right - could implement previous image
-                console.log('Swiped right');
-            }
-        }
-
         // Error handling for images
         document.querySelectorAll('img').forEach(img => {
             img.addEventListener('error', function() {
@@ -1632,77 +1641,6 @@ a{color:inherit}
         document.addEventListener('mousedown', function() {
             document.body.classList.remove('keyboard-navigation');
         });
-
-        // Focus management for modal
-        let lastFocusedElement;
-
-        function trapFocus(element) {
-            const focusableElements = element.querySelectorAll(
-                'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
-            );
-            const firstFocusableElement = focusableElements[0];
-            const lastFocusableElement = focusableElements[focusableElements.length - 1];
-
-            element.addEventListener('keydown', function(e) {
-                if (e.key === 'Tab') {
-                    if (e.shiftKey) {
-                        if (document.activeElement === firstFocusableElement) {
-                            lastFocusableElement.focus();
-                            e.preventDefault();
-                        }
-                    } else {
-                        if (document.activeElement === lastFocusableElement) {
-                            firstFocusableElement.focus();
-                            e.preventDefault();
-                        }
-                    }
-                }
-            });
-        }
-
-        // Enhanced modal functionality
-        function openModal(src) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
-            
-            // Store currently focused element
-            lastFocusedElement = document.activeElement;
-            
-            modal.style.display = 'block';
-            modalImg.src = src;
-            document.body.style.overflow = 'hidden';
-            
-            // Add zoom animation
-            modalImg.style.transform = 'translate(-50%, -50%) scale(0.8)';
-            modalImg.style.transition = 'transform 0.3s ease';
-            
-            requestAnimationFrame(() => {
-                modalImg.style.transform = 'translate(-50%, -50%) scale(1)';
-            });
-
-            // Focus management
-            const closeButton = modal.querySelector('.close');
-            closeButton.focus();
-            trapFocus(modal);
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
-            
-            // Add closing animation
-            modalImg.style.transform = 'translate(-50%, -50%) scale(0.8)';
-            
-            setTimeout(() => {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-                
-                // Restore focus
-                if (lastFocusedElement) {
-                    lastFocusedElement.focus();
-                }
-            }, 200);
-        }
 
         // Service Worker registration for PWA support
         if ('serviceWorker' in navigator) {
@@ -1766,7 +1704,124 @@ a{color:inherit}
                 trackEvent('Performance', 'Slow Load', loadTime + 'ms');
             }
         });
+        // Performance monitoring
+window.addEventListener('load', function() {
+  const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+  console.log('Page load time:', loadTime + 'ms');
+  if (loadTime > 3000) {
+    trackEvent('Performance', 'Slow Load', loadTime + 'ms');
+  }
+});
+
+/* =========================
+   NOVA GALERIA / LIGHTBOX
+   ========================= */
+(function(){
+  const grid   = document.getElementById('pgGrid');
+  const modal  = document.getElementById('pgModal');
+  const mainImg= document.getElementById('pgMain');
+  const caption= document.getElementById('pgModalTitle');
+  const thumbs = document.getElementById('pgThumbs');
+  const prev   = document.getElementById('pgPrev');
+  const next   = document.getElementById('pgNext');
+  const closeB = document.getElementById('pgClose');
+
+  if(!grid || !modal) return;
+
+  const items = Array.from(grid.querySelectorAll('.pg-item img'));
+  const images = items.map(img => ({
+    src: img.getAttribute('src') || img.getAttribute('data-src'),
+    alt: img.getAttribute('alt') || ''
+  })).filter(Boolean);
+
+  let current = 0, lastFocused = null, startX = 0;
+
+  function renderThumbs(){
+    thumbs.innerHTML = '';
+    images.forEach((im, i)=>{
+      const b = document.createElement('button');
+      b.className = 'pg-thumb'; b.type='button'; b.setAttribute('aria-label', `View photo ${i+1}`);
+      b.innerHTML = `<img src="${im.src}" alt="">`;
+      b.addEventListener('click', ()=>openAt(i));
+      thumbs.appendChild(b);
+    });
+  }
+
+  function setActiveThumb(){
+    Array.from(thumbs.children).forEach((el,i)=>{
+      el.classList.toggle('is-active', i===current);
+      if(i===current){ el.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'}); }
+    });
+  }
+
+  function openAt(idx){
+    current = (idx + images.length) % images.length;
+    const im = images[current];
+    mainImg.src = im.src; mainImg.alt = im.alt; caption.textContent = im.alt || '';
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    setActiveThumb();
+    closeB.focus();
+  }
+
+  function close(){
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    if(lastFocused) lastFocused.focus();
+  }
+
+  function nextImg(){ openAt(current+1); }
+  function prevImg(){ openAt(current-1); }
+
+  grid.addEventListener('click', (e)=>{
+    const fig = e.target.closest('.pg-item'); if(!fig) return;
+    const idx = parseInt(fig.dataset.index || '0', 10);
+    lastFocused = document.activeElement;
+    const imgEl = fig.querySelector('img');
+    if(imgEl && imgEl.dataset.src && !imgEl.src){
+      imgEl.src = imgEl.dataset.src; imgEl.removeAttribute('data-src'); images[idx].src = imgEl.src;
+    }
+    if(!thumbs.children.length) renderThumbs();
+    openAt(idx);
+  });
+
+  closeB.addEventListener('click', close);
+  prev.addEventListener('click', prevImg);
+  next.addEventListener('click', nextImg);
+  modal.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
+
+  document.addEventListener('keydown', (e)=>{
+    if(modal.getAttribute('aria-hidden')==='true') return;
+    if(e.key==='Escape') close();
+    if(e.key==='ArrowRight') nextImg();
+    if(e.key==='ArrowLeft') prevImg();
+  });
+
+  const stage = document.getElementById('pgStage');
+  stage.addEventListener('touchstart', e=>{ startX = e.changedTouches[0].screenX; }, {passive:true});
+  stage.addEventListener('touchend',   e=>{
+    const endX = e.changedTouches[0].screenX;
+    if(endX < startX - 40) nextImg();
+    if(endX > startX + 40) prevImg();
+  }, {passive:true});
+
+  // Reforço de lazy na grade (mantém compatível com seu observer global)
+  if ('IntersectionObserver' in window){
+    const ob = new IntersectionObserver((entries,o)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          const img = entry.target;
+          if(img.dataset.src){ img.src = img.dataset.src; img.removeAttribute('data-src'); }
+          o.unobserve(img);
+        }
+      });
+    });
+    grid.querySelectorAll('img[data-src]').forEach(img=>ob.observe(img));
+  }
+})();
+
     </script>
+
      <!-- Enhanced Modern Footer with Mobile Optimization -->
     <footer style="background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%); color: white; position: relative; overflow: hidden;">
         <!-- Decorative background elements -->

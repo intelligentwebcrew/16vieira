@@ -2489,11 +2489,6 @@ img {
             }
         });
 
-        // Form interaction tracking
-        document.getElementById('contactForm').addEventListener('submit', function() {
-            trackEvent('Lead', 'Form Submission', 'Contact Form');
-        });
-
         // Page visibility API for analytics
         document.addEventListener('visibilitychange', function() {
             if (document.visibilityState === 'visible') {

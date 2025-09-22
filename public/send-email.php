@@ -1,7 +1,7 @@
 <?php
 /**
  * send-mail.php — 16vieira.com
- * Secure Brevo (Sendinblue) mail relay using environment variable BREVO_API_KEY
+ * Secure Brevo mail relay using environment variable BREVO_API_KEY
  */
 
 declare(strict_types=1);

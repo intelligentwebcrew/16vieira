@@ -293,105 +293,404 @@ a{color:inherit}
 }
 
 /* =========================================================
-   5) Contact Section (mobile-first + desktop)
+   5) Contact Section - VERSÃO FINAL CORRIGIDA
    ========================================================= */
-.contact-section{
-  background: linear-gradient(135deg, var(--brand-1) 0%, var(--brand-2) 100%);
-  color:#fff;
-  text-align:center;
-}
 
-/* Container da seção (mesma largura do conteúdo interno) */
-.contact-section .container{
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
+.contact-section {
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 80px 0;
+        }
 
-/* Header da seção – MESMA largura da grade */
-.contact-section .section-header{
-  max-width: 1200px;      /* <- igual à .contact-grid */
-  margin: 0 auto 3rem;    /* centraliza */
-  padding: 0 1rem;        /* mesmo padding do container */
-}
+        /* Decorative background elements */
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 20s ease-in-out infinite;
+        }
 
-.contact-grid{
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 3rem;
-  max-width: 1200px;      /* <- igual ao header */
-  margin: 0 auto;
-}
+        .contact-section::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -15%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(72, 187, 120, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 25s ease-in-out infinite reverse;
+        }
 
-/* 2 colunas no desktop */
-@media (min-width: 768px){
-  .contact-grid{
-    grid-template-columns: 1fr 1fr;
-  }
-}
+        /* Container unificado - mesma estrutura das outras seções */
+        .contact-section .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
 
-.contact-form-container,
-.contact-card{
-  background: rgba(255,255,255,.95);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-  padding: 2rem;
-  border: 1px solid rgba(255,255,255,.2);
-  color: var(--txt);
-  box-shadow: var(--shadow-2);
-}
+        /* Header centralizado */
+        .contact-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
 
-.contact-card{
-  background: rgba(255,255,255,.15);
-  color:#fff;
-  border: 1px solid rgba(255,255,255,.2);
-}
+        .contact-title {
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            font-weight: 800;
+            color: white;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff, #e2e8f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-.contact-title{font-size:1.75rem;font-weight:700;margin-bottom:1rem}
-.contact-subtitle{font-size:1.125rem;margin-bottom:2rem;opacity:.9}
+        .contact-subtitle {
+            font-size: clamp(1.125rem, 3vw, 1.25rem);
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
 
-.agent-info{
-  display:flex; flex-direction:column; align-items:center;
-  gap:.5rem; margin-bottom:2rem;
-}
-.agent-name{font-size:1.5rem;font-weight:600}
-.agent-company{font-size:1rem;opacity:.8;text-align:center}
+        /* Layout principal em cards flutuantes */
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
 
-.contact-details{margin:2rem 0}
-.contact-item{
-  display:flex; justify-content:space-between; align-items:center;
-  padding:.75rem 0; border-bottom:1px solid rgba(255,255,255,.15);
-  flex-wrap:wrap; gap:.5rem;
-}
-.contact-item:last-child{border-bottom:none}
-.contact-item a{color:inherit;text-decoration:none;transition:color .3s ease;word-break:break-word}
-@media (hover:hover){ .contact-item a:hover{color:var(--brand-3)} }
+        @media (min-width: 900px) {
+            .contact-layout {
+                grid-template-columns: 1.2fr 0.8fr;
+                gap: 60px;
+            }
+        }
 
-.urgent-contact{
-  background: rgba(255,255,255,.1);
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-top: 2rem;
-  text-align: center;
-}
+        /* Card principal do formulário */
+        .contact-form-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
 
-/* Form */
-.contact-form-styled{display:flex;flex-direction:column;gap:1.5rem}
-.form-row{display:grid;grid-template-columns:1fr;gap:1rem}
-.form-group{display:flex;flex-direction:column}
-.form-group label{color:#2d3748;font-weight:600;margin-bottom:.5rem;font-size:.9rem}
-.form-group input,.form-group select,.form-group textarea{
-  padding:1rem; border:2px solid var(--slate-200); border-radius:12px; font-size:1rem;
-  transition:border-color .3s ease, box-shadow .3s ease, transform .2s ease; background:#fff;
-}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{
-  outline:none; border-color:var(--brand-1);
-  box-shadow:0 0 0 3px rgba(102,126,234,.1);
-  transform:translateY(-1px);
-}
-.form-group textarea{resize:vertical;min-height:120px}
-.submit-btn{margin-top:1rem;padding:1.25rem 2rem;font-size:1.1rem;position:relative;overflow:hidden}
 
+
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--txt);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .form-title::before {
+            content: '📝';
+            font-size: 1.5rem;
+        }
+
+        /* Formulário moderno */
+        .modern-form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--txt);
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            padding: 16px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+            font-family: inherit;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--brand-1);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+            color: white;
+            padding: 18px 32px;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Card de informações do agente */
+        .agent-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            height: fit-content;
+            position: relative;
+        }
+
+        .agent-profile {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .agent-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+            margin: 0 auto 20px;
+        }
+
+        .agent-name {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .agent-role {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .agent-company {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Informações de contato */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-info-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(4px);
+        }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .contact-info-text {
+            flex: 1;
+        }
+
+        .contact-info-label {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-bottom: 4px;
+        }
+
+        .contact-info-value {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .contact-info-value a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .contact-info-value a:hover {
+            color: var(--brand-3);
+        }
+
+        /* Call to action urgente */
+        .urgent-cta {
+            margin-top: 32px;
+            background: linear-gradient(135deg, var(--brand-3), #38a169);
+            padding: 24px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .urgent-cta-text {
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            opacity: 0.9;
+        }
+
+        .urgent-cta-button {
+            background: white;
+            color: var(--brand-3);
+            padding: 14px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .urgent-cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Animações */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(2deg);
+            }
+        }
+
+        /* Mensagens do formulário */
+        .form-message {
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-top: 16px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .form-message.success {
+            background: rgba(72, 187, 120, 0.1);
+            border: 2px solid rgba(72, 187, 120, 0.3);
+            color: #2f855a;
+        }
+
+        .form-message.error {
+            background: rgba(245, 101, 101, 0.1);
+            border: 2px solid rgba(245, 101, 101, 0.3);
+            color: #c53030;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .contact-section .container {
+                padding: 0 1rem;
+            }
+
+            .contact-form-card,
+            .agent-card {
+                padding: 24px;
+            }
+
+            .contact-layout {
+                gap: 24px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contact-section .container {
+                padding: 0 0.75rem;
+            }
+
+            .contact-form-card,
+            .agent-card {
+                padding: 20px;
+            }
+
+            .contact-header {
+                margin-bottom: 40px;
+            }
+        }
 
 /* =========================================================
    6) Modal (viewer)
@@ -1429,102 +1728,131 @@ a{color:inherit}
   </div>
 </section>
 
-    <section class="section contact-section" id="contact">
+    <section class="contact-section" id="contact">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title" style="color: white;">Get in Touch</h2>
-                <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">Ready to schedule your tour? Fill out the form below and we'll get back to you within 24 hours</p>
+            <!-- Header da seção -->
+            <div class="contact-header">
+                <h2 class="contact-title">Get in Touch</h2>
+                <p class="contact-subtitle">Ready to schedule your private tour? Fill out the form below and we'll get back to you within 24 hours</p>
             </div>
-            
-            <div class="contact-grid">
-                <div class="contact-form-container">
-                    <form id="contactForm" class="contact-form-styled">
+
+            <!-- Layout principal -->
+            <div class="contact-layout">
+                <!-- Card do formulário -->
+                <div class="contact-form-card">
+                    <h3 class="form-title">Schedule Your Tour</h3>
+                    
+                    <form id="contactForm" class="modern-form">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="firstName">First Name *</label>
-                                <input type="text" id="firstName" name="firstName" required>
+                                <label class="form-label" for="firstName">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" class="form-input" required>
                             </div>
                             <div class="form-group">
-                                <label for="lastName">Last Name *</label>
-                                <input type="text" id="lastName" name="lastName" required>
+                                <label class="form-label" for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" class="form-input" required>
                             </div>
                         </div>
-                        
+
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="email">Email Address *</label>
-                                <input type="email" id="email" name="email" required>
+                                <label class="form-label" for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" class="form-input" required>
                             </div>
                             <div class="form-group">
-                                <label for="phone">Phone Number *</label>
-                                <input type="tel" id="phone" name="phone" required>
+                                <label class="form-label" for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" class="form-input" required>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
-                            <label for="financing">Financing Status</label>
-                            <select id="financing" name="financing">
-                                <option value="">Select an option</option>
+                            <label class="form-label" for="financing">Financing Status</label>
+                            <select id="financing" name="financing" class="form-select">
+                                <option value="">Select your financing situation</option>
                                 <option value="pre-approved">Pre-approved for mortgage</option>
                                 <option value="need-financing">Need financing assistance</option>
                                 <option value="cash-buyer">Cash buyer</option>
                                 <option value="exploring">Just exploring options</option>
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
-                            <label for="message">Questions or Comments</label>
-                            <textarea id="message" name="message" rows="4" placeholder="Tell us what interests you most about this property..."></textarea>
+                            <label class="form-label" for="message">Questions or Special Requests</label>
+                            <textarea id="message" name="message" class="form-textarea" placeholder="Tell us what interests you most about this property, preferred tour times, or any specific questions..."></textarea>
                         </div>
-                        
-                        <button type="submit" class="btn btn-primary submit-btn">
+
+                        <button type="submit" class="submit-button">
                             <span class="btn-text">Send Message & Schedule Tour</span>
                             <span class="btn-loading" style="display: none;">Sending...</span>
                         </button>
-                        
-                        <div id="form-success" class="form-message success" style="display: none;">
-                            <strong>Thank you!</strong> Your message has been sent successfully. We'll contact you within 24 hours.
+
+                        <div id="form-success" class="form-message success">
+                            <strong>Thank you!</strong> Your message has been sent successfully. We'll contact you within 24 hours to schedule your private tour.
                         </div>
-                        
-                        <div id="form-error" class="form-message error" style="display: none;">
-                            <strong>Oops!</strong> There was an issue sending your message. Please try calling us directly.
+
+                        <div id="form-error" class="form-message error">
+                            <strong>Oops!</strong> There was an issue sending your message. Please try calling us directly at (857) 312-3214.
                         </div>
                     </form>
                 </div>
-                
-                <div class="contact-card">
-                    <h3 class="contact-title">Contact Information</h3>
-                    
-                    <div class="agent-info">
+
+                <!-- Card do agente -->
+                <div class="agent-card">
+                    <div class="agent-profile">
+                        <img src="/images/gercilaine-realtor.webp" alt="Realtor Gercilaine" width="200" height="200"> 
+                             alt="Gercilaine DeSouza" 
+                             class="agent-avatar">
                         <div class="agent-name">Gercilaine DeSouza</div>
+                        <div class="agent-role">Licensed Real Estate Professional</div>
                         <div class="agent-company">Allison James Estates & Homes of MA, LLC</div>
                     </div>
-                    
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <strong>Phone:</strong>
-                            <a href="tel:+18573123214">(857) 312-3214</a>
+
+                    <div class="contact-info">
+                        <div class="contact-info-item">
+                            <div class="contact-icon">📱</div>
+                            <div class="contact-info-text">
+                                <div class="contact-info-label">Phone</div>
+                                <div class="contact-info-value">
+                                    <a href="tel:+18573123214">(857) 312-3214</a>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="contact-item">
-                            <strong>Email:</strong>
-                            <a href="mailto:gerci.usa@gmail.com">gerci.usa@gmail.com</a>
+
+                        <div class="contact-info-item">
+                            <div class="contact-icon">📧</div>
+                            <div class="contact-info-text">
+                                <div class="contact-info-label">Email</div>
+                                <div class="contact-info-value">
+                                    <a href="mailto:gerci.usa@gmail.com">gerci.usa@gmail.com</a>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="contact-item">
-                            <strong>Property:</strong>
-                            <span>16 Vieira Dr, Peabody, MA 01960</span>
+
+                        <div class="contact-info-item">
+                            <div class="contact-icon">🏠</div>
+                            <div class="contact-info-text">
+                                <div class="contact-info-label">Property</div>
+                                <div class="contact-info-value">16 Vieira Dr, Peabody, MA 01960</div>
+                            </div>
                         </div>
-                        
-                        <div class="contact-item">
-                            <strong>Price:</strong>
-                            <span>$949,900</span>
+
+                        <div class="contact-info-item">
+                            <div class="contact-icon">💰</div>
+                            <div class="contact-info-text">
+                                <div class="contact-info-label">Price</div>
+                                <div class="contact-info-value">$949,900</div>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="urgent-contact">
-                        <p><strong>Need immediate assistance?</strong></p>
-                        <a href="tel:+18573123214" class="btn btn-secondary" style="width: 100%; margin-top: 1rem;">Call Now: (857) 312-3214</a>
+
+                    <div class="urgent-cta">
+                        <div class="urgent-cta-text">
+                            <strong>Need immediate assistance?</strong><br>
+                            Call or text for instant response
+                        </div>
+                        <a href="tel:+18573123214" class="urgent-cta-button">
+                            Call Now: (857) 312-3214
+                        </a>
                     </div>
                 </div>
             </div>

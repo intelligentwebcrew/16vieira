@@ -1064,6 +1064,63 @@ a{color:inherit}
   }
 }
 
+/* =========================================================
+   SCROLL TO TOP BUTTON - MODERNO
+   ========================================================= */
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.8);
+    backdrop-filter: blur(10px);
+}
+
+.scroll-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.scroll-to-top:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+}
+
+.scroll-to-top::before {
+    content: '↑';
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    line-height: 1;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .scroll-to-top {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .scroll-to-top::before {
+        font-size: 20px;
+    }
+}
 
 </style>
 
@@ -2684,6 +2741,35 @@ window.addEventListener('load', function() {
             "availability": "https://schema.org/ForSale"
         }
     }
+    // Scroll to Top functionality
+const scrollToTopBtn = document.getElementById('scrollToTop');
+
+// Show/hide button based on scroll position
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 500) {
+        scrollToTopBtn.classList.add('show');
+    } else {
+        scrollToTopBtn.classList.remove('show');
+    }
+});
+
+// Smooth scroll to top
+scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+    
+    // Track analytics
+    if (typeof trackEvent !== 'undefined') {
+        trackEvent('Navigation', 'Scroll to Top', 'Button Click');
+    }
+});
     </script>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top" title="Back to top">
+</button>
+
 </body>
 </html>

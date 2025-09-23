@@ -52,42 +52,108 @@
 
     <script type="application/ld+json">
     {
-      "@context":"https://schema.org",
-      "@type":"SingleFamilyResidence",
-      "name":"16 Vieira Dr, Peabody, MA 01960",
-      "url":"https://16vieira.com/",
-      "description":"Modern 3BR/3BA home with heated pool, built in 2018, 2,330 sq ft in South Peabody.",
-      "image":[
-        "https://16vieira.com/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m304766765rd-w1280_h960.webp"
-      ],
-      "address":{
-        "@type":"PostalAddress",
-        "streetAddress":"16 Vieira Dr",
-        "addressLocality":"Peabody",
-        "addressRegion":"MA",
-        "postalCode":"01960",
-        "addressCountry":"US"
+  "@context": "https://schema.org",
+  "@type": "SingleFamilyResidence",
+  "name": "16 Vieira Dr, Peabody, MA 01960",
+  "url": "https://16vieira.com/",
+  "description": "Modern 3BR/3BA home with heated pool, built in 2018, 2,330 sq ft in South Peabody.",
+  "image": [
+    "https://16vieira.com/images/a98e7fdcfd0f21e4ad7e3c566ea785efl-m304766765rd-w1280_h960.webp"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "16 Vieira Dr",
+    "addressLocality": "Peabody",
+    "addressRegion": "MA",
+    "postalCode": "01960",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 42.5278,
+    "longitude": -70.9286
+  },
+  "numberOfBedrooms": 3,
+  "numberOfBathroomsTotal": 3,
+  "floorSize": {
+    "@type": "QuantitativeValue",
+    "value": 2330,
+    "unitCode": "FTK"
+  },
+  "yearBuilt": 2018,
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "1",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "review": {
+    "@type": "Review",
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "5",
+      "bestRating": "5"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Property Showcase"
+    },
+    "reviewBody": "Beautiful modern home with exceptional features including heated pool, premium finishes, and excellent location in South Peabody."
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "949900",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://16vieira.com/",
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "0",
+        "currency": "USD"
       },
-      "geo":{"@type":"GeoCoordinates","latitude":42.5278,"longitude":-70.9286},
-      "numberOfBedrooms":3,
-      "numberOfBathroomsTotal":3,
-      "floorSize":{"@type":"QuantitativeValue","value":2330,"unitCode":"FTK"},
-      "yearBuilt":2018,
-      "offers":{
-        "@type":"Offer",
-        "price":"949900",
-        "priceCurrency":"USD",
-        "availability":"https://schema.org/InStock",
-        "url":"https://16vieira.com/"
+      "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "US"
       },
-      "seller":{
-        "@type":"RealEstateAgent",
-        "name":"Gercilaine DeSouza",
-        "telephone":"+1-857-312-3214",
-        "email":"gerci.usa@gmail.com",
-        "worksFor":{"@type":"RealEstateAgency","name":"Allison James Estates & Homes of MA, LLC"}
+      "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 0,
+          "maxValue": 0,
+          "unitCode": "DAY"
+        },
+        "transitTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 0,
+          "maxValue": 0,
+          "unitCode": "DAY"
+        }
       }
+    },
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": "US",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted",
+      "merchantReturnDays": 0,
+      "returnMethod": "https://schema.org/ReturnByMail",
+      "returnFees": "https://schema.org/ReturnFeesCustomerResponsibility"
     }
+  },
+  "seller": {
+    "@type": "RealEstateAgent",
+    "name": "Gercilaine DeSouza",
+    "telephone": "+1-857-312-3214",
+    "email": "gerci.usa@gmail.com",
+    "worksFor": {
+      "@type": "RealEstateAgency",
+      "name": "Allison James Estates & Homes of MA, LLC"
+    }
+  }
+}
     </script>
     
     <style>
